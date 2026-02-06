@@ -21,7 +21,7 @@ export default function NavigationBar({
 }: Readonly<NavigationBarProps>) {
   return (
     <header className="w-full border-b bg-background">
-      <div className="mx-auto flex h-16 w-full max-w-6xl items-center gap-4 px-4">
+      <div className="mx-auto flex-row h-16 w-full max-w-6xl items-center gap-4 px-4">
         {isAuthenticated ? (
           <div className="flex items-center">
             <UserCircle2 className="size-7 text-foreground" aria-hidden="true" />
