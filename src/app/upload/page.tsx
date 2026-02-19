@@ -1,7 +1,5 @@
-const Upload = () => {
-  return (
-    <div>Upload page.</div>
-  );
-}
+import { redirect } from "next/navigation"
 
-export default Upload;
+export default function UploadPage() {
+  redirect("/dashboard/upload")
+}
