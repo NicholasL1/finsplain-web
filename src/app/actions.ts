@@ -106,8 +106,17 @@ export const forgotPasswordAction = async (formData: FormData) => {
   });
 
   if (error) {
-    console.error(error.message, (error as { code?: string }).code, (error as { status?: number }).status);
-    return encodedRedirect("error", "/forgot-password", error.message);
+    console.error(error.message);
+    const isRateLimit =
+      (error as { status?: number }).status === 429 ||
+      error.message?.toLowerCase().includes("security purposes") ||
+      error.message?.toLowerCase().includes("rate limit");
+    // For rate limits, surface Supabase's message directly — it contains the
+    // actual wait time (e.g. "after 300 seconds"), which we don't want to guess.
+    const message = isRateLimit
+      ? error.message
+      : "Unable to send the reset email. Please check the address and try again.";
+    return encodedRedirect("error", "/forgot-password", message);
   }
 
   if (callbackUrl) {
