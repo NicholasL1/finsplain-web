@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { ArrowRight, FileText } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import SampleDocumentModal from "@/src/components/SampleDocumentModal";
 
 export default function Hero() {
   return (
@@ -27,13 +28,7 @@ export default function Hero() {
                 <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
 
-              <Link
-                href="/how-it-works"
-                className="inline-flex items-center px-7 py-3.5 text-[#1F2937] border border-[#E5E7EB] rounded-xl hover:bg-[#F9FAFB] transition-all duration-150 text-base font-medium"
-              >
-                <FileText className="mr-2 w-4 h-4 text-[#6B7280]" />
-                Try a Sample Document
-              </Link>
+              <SampleDocumentModal />
             </div>
           </div>
 

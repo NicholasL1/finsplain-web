@@ -35,14 +35,6 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/privacy"
-                  className="text-sm text-[#6B7280] hover:text-[#1F2937] transition-colors"
-                >
-                  Privacy
-                </Link>
-              </li>
-              <li>
-                <Link
                   href="/sign-up"
                   className="text-sm text-[#6B7280] hover:text-[#1F2937] transition-colors"
                 >
@@ -67,7 +59,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="#"
+                  href="/terms"
                   className="text-sm text-[#6B7280] hover:text-[#1F2937] transition-colors"
                 >
                   Terms of Service
@@ -99,7 +91,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="#"
+                  href="/contact"
                   className="text-sm text-[#6B7280] hover:text-[#1F2937] transition-colors"
                 >
                   Contact Us

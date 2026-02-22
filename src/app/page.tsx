@@ -2,27 +2,18 @@ import Footer from "@/src/components/Footer";
 import Hero from "@/src/components/Hero";
 import Navbar from "@/src/components/Navbar";
 import ProcessSteps from "@/src/components/ProcessSteps";
+import FeatureShowcase from "@/src/components/FeatureShowcase";
 import PrivacyPrinciples from "@/src/components/PrivacyPrinciples";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { createClient } from "../../supabase/server";
-import { redirect } from "next/navigation";
 
-export default async function Home() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (user) {
-    redirect("/dashboard");
-  }
-
+export default function Home() {
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
       <Hero />
       <ProcessSteps />
+      <FeatureShowcase />
 
       {/* Trust/Stats Section */}
       <section className="py-16 bg-[#F9FAFB]">
