@@ -67,11 +67,7 @@ export const signUpAction = async (formData: FormData) => {
     }
   }
 
-  return encodedRedirect(
-    "success",
-    "/sign-up",
-    "Thanks for signing up! Please check your email for a verification link.",
-  );
+  return redirect("/sign-in?toast=signed-up");
 };
 
 export const signInAction = async (formData: FormData) => {
@@ -123,11 +119,7 @@ export const forgotPasswordAction = async (formData: FormData) => {
     return redirect(callbackUrl);
   }
 
-  return encodedRedirect(
-    "success",
-    "/forgot-password",
-    "Check your email for a link to reset your password.",
-  );
+  return redirect("/forgot-password?toast=reset-sent");
 };
 
 export const resetPasswordAction = async (formData: FormData) => {
@@ -193,8 +185,7 @@ export const resetPasswordAction = async (formData: FormData) => {
 
   cookieStore.delete("password_reset_token");
 
-  // Redirect to sign-in — the user must log in fresh with their new password.
-  return redirect("/sign-in");
+  return redirect("/sign-in?toast=password-reset");
 };
 
 export type SignInState = { error: string; attempts: number }
@@ -226,11 +217,11 @@ export const signInActionWithState = async (
     return { error: message, attempts: prevAttempts + 1 };
   }
 
-  return redirect("/dashboard") as never;
+  return redirect("/dashboard?toast=signed-in") as never;
 };
 
 export const signOutAction = async () => {
   const supabase = await createClient();
   await supabase.auth.signOut();
-  return redirect("/sign-in");
+  return redirect("/sign-in?toast=signed-out");
 };

@@ -30,17 +30,25 @@ export async function GET(request: Request) {
     );
 
     if (redirectTo.includes("/reset-password")) {
-      // Password recovery flow — we do NOT want to leave the user with a full
-      // authenticated session. Instead:
-      //  1. Exchange the code (establishes session internally + sets cookies above)
-      //  2. Immediately sign out to clear those session cookies from the response
+      // Password recovery flow:
+      //  1. Exchange the code to get the access token
+      //  2. Manually delete auth-session cookies from the response so the browser
+      //     never receives an active session (no signOut — calling signOut revokes
+      //     the session in Supabase's DB, which also invalidates the access token
+      //     and causes the subsequent password-update REST call to return 401)
       //  3. Store only the short-lived access token in a secure httpOnly cookie
-      // The reset-password page uses this token to make a one-time API call.
       const { data: { session } } = await supabase.auth.exchangeCodeForSession(code);
 
       if (session?.access_token) {
-        // Revoke the refresh token and clear session cookies from the response.
-        await supabase.auth.signOut({ scope: "global" });
+        // Derive the cookie name prefix from the Supabase project ref.
+        const projectRef = new URL(process.env.NEXT_PUBLIC_SUPABASE_URL!).hostname.split(".")[0];
+        const base = `sb-${projectRef}-auth-token`;
+
+        // Delete the session cookies Supabase just wrote onto the response.
+        // Supabase chunks large JWTs, so delete the base name and up to 5 chunks.
+        [base, ...Array.from({ length: 5 }, (_, i) => `${base}.${i}`)].forEach(
+          (name) => response.cookies.delete(name)
+        );
 
         response.cookies.set("password_reset_token", session.access_token, {
           httpOnly: true,

@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/src/components/ThemeProvider";
+import { Toaster } from "sonner";
+import { Suspense } from "react";
+import { UrlToast } from "@/src/components/UrlToast";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -37,6 +40,16 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          <Suspense>
+            <UrlToast />
+          </Suspense>
+          <Toaster
+            position="top-right"
+            richColors
+            toastOptions={{
+              style: { fontFamily: "var(--font-inter)" },
+            }}
+          />
         </ThemeProvider>
       </body>
     </html>
