@@ -2,14 +2,10 @@
 import { UserCircle } from 'lucide-react'
 import { Button } from '@/src/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/src/components/ui/dropdown-menu'
-// import { createClient } from '../../supabase/client'
-import { useRouter } from 'next/navigation'
+import { signOutAction } from '@/src/app/actions'
 import Link from 'next/link'
 
 export default function UserProfile() {
-    // const supabase = createClient()
-    const router = useRouter()
-
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -36,11 +32,7 @@ export default function UserProfile() {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                     className="cursor-pointer text-sm text-[#EF4444] focus:text-[#EF4444]"
-                    onClick={async () => {
-                        // await supabase.auth.signOut()
-                        router.push('/')
-                        router.refresh()
-                    }}
+                    onClick={() => signOutAction()}
                 >
                     Sign out
                 </DropdownMenuItem>

@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 export async function proxy(req: NextRequest) {
-  const res = NextResponse.next()
+  const res = NextResponse.next({ request: req })
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -11,41 +11,34 @@ export async function proxy(req: NextRequest) {
     {
       cookies: {
         getAll() {
-          return req.cookies.getAll().map(({ name, value }) => ({
-            name,
-            value,
-          }))
+          return req.cookies.getAll()
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) => {
-            req.cookies.set(name, value)
+          cookiesToSet.forEach(({ name, value }) => req.cookies.set(name, value))
+          cookiesToSet.forEach(({ name, value, options }) =>
             res.cookies.set(name, value, options)
-          }) 
-        }, 
+          )
+        },
       },
     }
   )
 
-  // Refresh session if expired - required for Server Components
-  const { data: { session }, error } = await supabase.auth.getSession()
+  // Refresh session if expired — required for Server Components
+  const { data: { user } } = await supabase.auth.getUser()
 
-  if (error) {
-    console.error('Auth session error:', error)
+  const path = req.nextUrl.pathname
+
+  // Protect all dashboard routes — redirect unauthenticated users to sign-in.
+  if (path.startsWith('/dashboard') && !user) {
+    return NextResponse.redirect(new URL('/sign-in', req.url))
   }
 
   return res
 }
 
-// Ensure the middleware is only called for relevant paths
+// Ensure the proxy is only called for relevant paths
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - public (public files)
-     */
     '/((?!_next/static|_next/image|favicon.ico|public|api).*)',
   ],
 }
