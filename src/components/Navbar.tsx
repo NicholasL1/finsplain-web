@@ -3,13 +3,14 @@ import { Button } from "@/src/components/ui/button";
 import MobileNav from "@/src/components/MobileNav";
 import UserProfile from "@/src/components/UserProfile";
 import { createClient } from "@/supabase/server";
+import { ThemeSwitcher } from "@/src/components/ThemeSwitcher";
 
 export default async function Navbar() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-white/80 backdrop-blur-md">
+    <nav className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
       <div className="container mx-auto px-4 flex justify-between items-center h-16">
         <Link
           href="/"
@@ -41,10 +42,12 @@ export default async function Navbar() {
               >
                 Account
               </Link>
+              <ThemeSwitcher />
               <UserProfile />
             </>
           ) : (
             <>
+              <ThemeSwitcher />
               <Link
                 href="/how-it-works"
                 className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"

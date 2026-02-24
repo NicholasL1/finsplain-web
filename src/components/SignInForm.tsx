@@ -20,13 +20,13 @@ export function SignInForm() {
   return (
     <form action={formAction} className="flex flex-col space-y-6">
       <div className="space-y-2 text-center">
-        <h1 className="font-heading text-2xl font-bold text-[#1F2937] tracking-tight">
+        <h1 className="font-heading text-2xl font-bold text-foreground tracking-tight">
           Welcome back
         </h1>
-        <p className="text-sm text-[#6B7280]">
+        <p className="text-sm text-muted-foreground">
           Don&apos;t have an account?{" "}
           <Link
-            className="text-[#10B981] font-medium hover:underline transition-all"
+            className="text-emerald-500 font-medium hover:underline transition-all"
             href="/sign-up"
           >
             Sign up
@@ -36,7 +36,7 @@ export function SignInForm() {
 
       <div className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="email" className="text-sm font-medium text-[#1F2937]">
+          <Label htmlFor="email" className="text-sm font-medium text-foreground">
             Email
           </Label>
           <Input
@@ -45,7 +45,7 @@ export function SignInForm() {
             type="email"
             placeholder="you@example.com"
             required
-            className="w-full border-[#E5E7EB] focus:border-[#10B981] focus:ring-[#10B981] rounded-xl"
+            className="w-full border-border focus:border-emerald-500 focus:ring-emerald-500 rounded-xl"
           />
         </div>
 
@@ -53,12 +53,12 @@ export function SignInForm() {
           <div className="flex justify-between items-center">
             <Label
               htmlFor="password"
-              className="text-sm font-medium text-[#1F2937]"
+              className="text-sm font-medium text-foreground"
             >
               Password
             </Label>
             <Link
-              className="text-xs text-[#6B7280] hover:text-[#1F2937] hover:underline transition-all"
+              className="text-xs text-muted-foreground hover:text-foreground hover:underline transition-all"
               href="/forgot-password"
             >
               Forgot Password?
@@ -69,13 +69,13 @@ export function SignInForm() {
             name="password"
             placeholder="Your password"
             required
-            className="w-full border-[#E5E7EB] focus:border-[#10B981] focus:ring-[#10B981] rounded-xl"
+            className="w-full border-border focus:border-emerald-500 focus:ring-emerald-500 rounded-xl"
           />
         </div>
       </div>
 
       <SubmitButton
-        className="w-full bg-[#10B981] hover:bg-[#059669] text-white rounded-xl h-11 text-sm font-medium"
+        className="w-full bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl h-11 text-sm font-medium"
         pendingText="Signing in..."
       >
         Sign in
@@ -87,11 +87,11 @@ export function SignInForm() {
             {error}
           </p>
           {showForgotHint && (
-            <p className="text-sm text-[#6B7280] border-l-2 border-[#E5E7EB] pl-3">
+            <p className="text-sm text-muted-foreground border-l-2 border-border pl-3">
               Having trouble?{" "}
               <Link
                 href="/forgot-password"
-                className="text-[#10B981] font-medium hover:underline"
+                className="text-emerald-500 font-medium hover:underline"
               >
                 Reset your password
               </Link>{" "}

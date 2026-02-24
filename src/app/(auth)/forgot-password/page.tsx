@@ -24,15 +24,15 @@ export default async function ForgotPassword(props: {
   return (
     <>
       <Navbar />
-      <div className="flex min-h-screen flex-col items-center justify-center bg-white px-4 py-8">
-        <div className="w-full max-w-md rounded-2xl border border-[#E5E7EB] bg-white p-8 shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
+      <div className="flex min-h-screen flex-col items-center justify-center bg-background px-4 py-8">
+        <div className="w-full max-w-md rounded-2xl border border-border bg-card p-8 shadow-[0_1px_2px_rgba(0,0,0,0.05)]">
           <UrlProvider>
             <form className="flex flex-col space-y-6">
               <div className="space-y-2 text-center">
-                <h1 className="font-heading text-2xl font-bold text-[#1F2937] tracking-tight">
+                <h1 className="font-heading text-2xl font-bold text-foreground tracking-tight">
                   Reset Password
                 </h1>
-                <p className="text-sm text-[#6B7280]">
+                <p className="text-sm text-muted-foreground">
                   Remember your password?{" "}
                   <Link
                     className="text-[#10B981] font-medium hover:underline transition-all"
@@ -47,7 +47,7 @@ export default async function ForgotPassword(props: {
                 <div className="space-y-2">
                   <Label
                     htmlFor="email"
-                    className="text-sm font-medium text-[#1F2937]"
+                    className="text-sm font-medium text-foreground"
                   >
                     Email
                   </Label>
@@ -57,7 +57,7 @@ export default async function ForgotPassword(props: {
                     type="email"
                     placeholder="you@example.com"
                     required
-                    className="w-full border-[#E5E7EB] focus:border-[#10B981] focus:ring-[#10B981] rounded-xl"
+                    className="w-full border-border focus:border-emerald-500 focus:ring-emerald-500 rounded-xl"
                   />
                 </div>
               </div>

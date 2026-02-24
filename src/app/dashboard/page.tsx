@@ -24,16 +24,16 @@ export default async function Dashboard() {
     .order("created_at", { ascending: false });
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Navbar />
       <main className="container mx-auto px-4 py-8 sm:py-12">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="font-heading text-2xl sm:text-3xl font-bold text-[#1F2937]">
+            <h1 className="font-heading text-2xl sm:text-3xl font-bold text-foreground">
               Documents
             </h1>
-            <p className="text-sm text-[#6B7280] mt-1">
+            <p className="text-sm text-muted-foreground mt-1">
               {documents && documents.length > 0
                 ? `${documents.length} document${documents.length !== 1 ? "s" : ""} analyzed`
                 : "Upload a document to get started"}

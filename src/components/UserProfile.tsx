@@ -9,29 +9,29 @@ export default function UserProfile() {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="rounded-xl hover:bg-[#F3F4F6]">
-                    <UserCircle className="h-5 w-5 text-[#6B7280]" />
+                <Button variant="ghost" size="icon" className="rounded-xl hover:bg-accent">
+                    <UserCircle className="h-5 w-5 text-muted-foreground" />
                 </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-48 rounded-xl border-[#E5E7EB]">
+            <DropdownMenuContent align="end" className="w-48 rounded-xl border-border">
                 <DropdownMenuItem asChild>
-                    <Link href="/dashboard" className="cursor-pointer text-sm text-[#1F2937]">
+                    <Link href="/dashboard" className="cursor-pointer text-sm text-foreground">
                         Documents
                     </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                    <Link href="/dashboard/upload" className="cursor-pointer text-sm text-[#1F2937]">
+                    <Link href="/dashboard/upload" className="cursor-pointer text-sm text-foreground">
                         Upload
                     </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                    <Link href="/dashboard/account" className="cursor-pointer text-sm text-[#1F2937]">
+                    <Link href="/dashboard/account" className="cursor-pointer text-sm text-foreground">
                         Account Settings
                     </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
-                    className="cursor-pointer text-sm text-[#EF4444] focus:text-[#EF4444]"
+                    className="cursor-pointer text-sm text-red-500 focus:text-red-500"
                     onClick={() => signOutAction()}
                 >
                     Sign out

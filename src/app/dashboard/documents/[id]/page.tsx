@@ -65,13 +65,13 @@ export default async function DocumentDetailPage({ params }: PageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Navbar />
       <main className="container mx-auto px-4 py-8 sm:py-12">
         {/* Back nav */}
         <Link
           href="/dashboard"
-          className="inline-flex items-center text-sm text-[#6B7280] hover:text-[#1F2937] transition-colors mb-6"
+          className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors mb-6"
         >
           <ArrowLeft className="w-4 h-4 mr-1.5" />
           Back to Documents
@@ -81,17 +81,17 @@ export default async function DocumentDetailPage({ params }: PageProps) {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <div>
             <div className="flex items-center gap-3 mb-1">
-              <h1 className="font-heading text-2xl font-bold text-[#1F2937]">
+              <h1 className="font-heading text-2xl font-bold text-foreground">
                 {doc.filename}
               </h1>
               <StatusBadge status={doc.status} />
             </div>
-            <p className="text-sm text-[#6B7280]">
+            <p className="text-sm text-muted-foreground">
               Uploaded {formatDate(doc.created_at)}
             </p>
           </div>
           <Link href="/dashboard/upload">
-            <Button className="bg-[#10B981] hover:bg-[#059669] text-white rounded-xl px-5 h-10 text-sm font-medium">
+            <Button className="bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl px-5 h-10 text-sm font-medium">
               <Upload className="w-4 h-4 mr-2" />
               Upload Another
             </Button>
@@ -100,13 +100,13 @@ export default async function DocumentDetailPage({ params }: PageProps) {
 
         {doc.status === "processing" && (
           <div className="text-center py-20">
-            <div className="w-16 h-16 rounded-2xl bg-[#F59E0B]/10 flex items-center justify-center mx-auto mb-6">
-              <RefreshCw className="w-7 h-7 text-[#F59E0B] animate-spin" />
+            <div className="w-16 h-16 rounded-2xl bg-amber-500/10 flex items-center justify-center mx-auto mb-6">
+              <RefreshCw className="w-7 h-7 text-amber-500 animate-spin" />
             </div>
-            <h3 className="font-heading text-xl font-semibold text-[#1F2937] mb-2">
+            <h3 className="font-heading text-xl font-semibold text-foreground mb-2">
               Analyzing your document...
             </h3>
-            <p className="text-[#6B7280] text-sm">
+            <p className="text-muted-foreground text-sm">
               This usually takes less than 30 seconds. The page will update
               automatically.
             </p>
@@ -115,17 +115,17 @@ export default async function DocumentDetailPage({ params }: PageProps) {
 
         {doc.status === "error" && (
           <div className="text-center py-20">
-            <div className="w-16 h-16 rounded-2xl bg-[#EF4444]/10 flex items-center justify-center mx-auto mb-6">
-              <AlertTriangle className="w-7 h-7 text-[#EF4444]" />
+            <div className="w-16 h-16 rounded-2xl bg-red-500/10 flex items-center justify-center mx-auto mb-6">
+              <AlertTriangle className="w-7 h-7 text-red-500" />
             </div>
-            <h3 className="font-heading text-xl font-semibold text-[#1F2937] mb-2">
+            <h3 className="font-heading text-xl font-semibold text-foreground mb-2">
               Analysis failed
             </h3>
-            <p className="text-[#6B7280] text-sm mb-6">
+            <p className="text-muted-foreground text-sm mb-6">
               We couldn't process this document. Please try uploading again.
             </p>
             <Link href="/dashboard/upload">
-              <Button className="bg-[#10B981] hover:bg-[#059669] text-white rounded-xl px-5 h-10 text-sm font-medium">
+              <Button className="bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl px-5 h-10 text-sm font-medium">
                 Try Again
               </Button>
             </Link>
@@ -136,47 +136,47 @@ export default async function DocumentDetailPage({ params }: PageProps) {
           <>
             {/* Summary Cards */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-              <div className="p-5 rounded-2xl border border-[#E5E7EB] bg-white">
-                <div className="w-9 h-9 rounded-lg bg-[#F59E0B]/10 flex items-center justify-center mb-3">
-                  <DollarSign className="w-4.5 h-4.5 text-[#F59E0B]" />
+              <div className="p-5 rounded-2xl border border-border bg-card">
+                <div className="w-9 h-9 rounded-lg bg-amber-500/10 flex items-center justify-center mb-3">
+                  <DollarSign className="w-4.5 h-4.5 text-amber-500" />
                 </div>
-                <div className="font-heading text-2xl font-bold text-[#1F2937]">
+                <div className="font-heading text-2xl font-bold text-card-foreground">
                   ${doc.total_fees?.toFixed(2) || "0.00"}
                 </div>
-                <div className="text-xs text-[#6B7280] mt-0.5">
+                <div className="text-xs text-muted-foreground mt-0.5">
                   Total Fees Found
                 </div>
               </div>
-              <div className="p-5 rounded-2xl border border-[#E5E7EB] bg-white">
-                <div className="w-9 h-9 rounded-lg bg-[#10B981]/10 flex items-center justify-center mb-3">
-                  <RefreshCw className="w-4.5 h-4.5 text-[#10B981]" />
+              <div className="p-5 rounded-2xl border border-border bg-card">
+                <div className="w-9 h-9 rounded-lg bg-emerald-500/10 flex items-center justify-center mb-3">
+                  <RefreshCw className="w-4.5 h-4.5 text-emerald-500" />
                 </div>
-                <div className="font-heading text-2xl font-bold text-[#1F2937]">
+                <div className="font-heading text-2xl font-bold text-card-foreground">
                   {doc.subscriptions_found || 0}
                 </div>
-                <div className="text-xs text-[#6B7280] mt-0.5">
+                <div className="text-xs text-muted-foreground mt-0.5">
                   Subscriptions
                 </div>
               </div>
-              <div className="p-5 rounded-2xl border border-[#E5E7EB] bg-white">
-                <div className="w-9 h-9 rounded-lg bg-[#EF4444]/10 flex items-center justify-center mb-3">
-                  <AlertTriangle className="w-4.5 h-4.5 text-[#EF4444]" />
+              <div className="p-5 rounded-2xl border border-border bg-card">
+                <div className="w-9 h-9 rounded-lg bg-red-500/10 flex items-center justify-center mb-3">
+                  <AlertTriangle className="w-4.5 h-4.5 text-red-500" />
                 </div>
-                <div className="font-heading text-2xl font-bold text-[#1F2937]">
+                <div className="font-heading text-2xl font-bold text-card-foreground">
                   {doc.unusual_activities || 0}
                 </div>
-                <div className="text-xs text-[#6B7280] mt-0.5">
+                <div className="text-xs text-muted-foreground mt-0.5">
                   Unusual Activities
                 </div>
               </div>
-              <div className="p-5 rounded-2xl border border-[#E5E7EB] bg-white">
-                <div className="w-9 h-9 rounded-lg bg-[#10B981]/10 flex items-center justify-center mb-3">
-                  <TrendingDown className="w-4.5 h-4.5 text-[#10B981]" />
+              <div className="p-5 rounded-2xl border border-border bg-card">
+                <div className="w-9 h-9 rounded-lg bg-emerald-500/10 flex items-center justify-center mb-3">
+                  <TrendingDown className="w-4.5 h-4.5 text-emerald-500" />
                 </div>
-                <div className="font-heading text-2xl font-bold text-[#1F2937]">
+                <div className="font-heading text-2xl font-bold text-card-foreground">
                   ${doc.savings_identified?.toFixed(2) || "0.00"}
                 </div>
-                <div className="text-xs text-[#6B7280] mt-0.5">
+                <div className="text-xs text-muted-foreground mt-0.5">
                   Potential Savings
                 </div>
               </div>
@@ -186,21 +186,21 @@ export default async function DocumentDetailPage({ params }: PageProps) {
             <div className="grid lg:grid-cols-2 gap-6">
               {/* Fees */}
               {fees.length > 0 && (
-                <div className="rounded-2xl border border-[#E5E7EB] p-6">
-                  <h3 className="font-heading text-lg font-semibold text-[#1F2937] mb-4 flex items-center gap-2">
-                    <DollarSign className="w-5 h-5 text-[#F59E0B]" />
+                <div className="rounded-2xl border border-border p-6">
+                  <h3 className="font-heading text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                    <DollarSign className="w-5 h-5 text-amber-500" />
                     Fees Identified
                   </h3>
                   <div className="space-y-3">
                     {fees.map((fee, i) => (
                       <div
                         key={i}
-                        className="flex items-center justify-between py-2 border-b border-[#F3F4F6] last:border-0"
+                        className="flex items-center justify-between py-2 border-b border-border/50 last:border-0"
                       >
-                        <span className="text-sm text-[#1F2937]">
+                        <span className="text-sm text-foreground">
                           {fee.name}
                         </span>
-                        <span className="text-sm font-medium text-[#F59E0B]">
+                        <span className="text-sm font-medium text-amber-500">
                           ${fee.amount.toFixed(2)}
                         </span>
                       </div>
@@ -211,26 +211,26 @@ export default async function DocumentDetailPage({ params }: PageProps) {
 
               {/* Subscriptions */}
               {subscriptions.length > 0 && (
-                <div className="rounded-2xl border border-[#E5E7EB] p-6">
-                  <h3 className="font-heading text-lg font-semibold text-[#1F2937] mb-4 flex items-center gap-2">
-                    <RefreshCw className="w-5 h-5 text-[#10B981]" />
+                <div className="rounded-2xl border border-border p-6">
+                  <h3 className="font-heading text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                    <RefreshCw className="w-5 h-5 text-emerald-500" />
                     Active Subscriptions
                   </h3>
                   <div className="space-y-3">
                     {subscriptions.map((sub, i) => (
                       <div
                         key={i}
-                        className="flex items-center justify-between py-2 border-b border-[#F3F4F6] last:border-0"
+                        className="flex items-center justify-between py-2 border-b border-border/50 last:border-0"
                       >
                         <div>
-                          <span className="text-sm text-[#1F2937]">
+                          <span className="text-sm text-foreground">
                             {sub.name}
                           </span>
-                          <span className="text-xs text-[#6B7280] ml-2">
+                          <span className="text-xs text-muted-foreground ml-2">
                             {sub.frequency}
                           </span>
                         </div>
-                        <span className="text-sm font-medium text-[#1F2937]">
+                        <span className="text-sm font-medium text-foreground">
                           ${sub.amount.toFixed(2)}
                         </span>
                       </div>
@@ -241,18 +241,18 @@ export default async function DocumentDetailPage({ params }: PageProps) {
 
               {/* Patterns */}
               {patterns.length > 0 && (
-                <div className="rounded-2xl border border-[#E5E7EB] p-6">
-                  <h3 className="font-heading text-lg font-semibold text-[#1F2937] mb-4 flex items-center gap-2">
-                    <TrendingDown className="w-5 h-5 text-[#6366F1]" />
+                <div className="rounded-2xl border border-border p-6">
+                  <h3 className="font-heading text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                    <TrendingDown className="w-5 h-5 text-indigo-500" />
                     Spending Patterns
                   </h3>
                   <ul className="space-y-3">
                     {patterns.map((pattern, i) => (
                       <li
                         key={i}
-                        className="flex items-start gap-3 text-sm text-[#6B7280]"
+                        className="flex items-start gap-3 text-sm text-muted-foreground"
                       >
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#6366F1] mt-2 flex-shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-2 flex-shrink-0" />
                         {pattern}
                       </li>
                     ))}
@@ -262,24 +262,24 @@ export default async function DocumentDetailPage({ params }: PageProps) {
 
               {/* Unusual Activity */}
               {unusual.length > 0 && (
-                <div className="rounded-2xl border border-[#EF4444]/20 bg-[#EF4444]/5 p-6">
-                  <h3 className="font-heading text-lg font-semibold text-[#1F2937] mb-4 flex items-center gap-2">
-                    <AlertTriangle className="w-5 h-5 text-[#EF4444]" />
+                <div className="rounded-2xl border border-red-500/20 bg-red-500/5 p-6">
+                  <h3 className="font-heading text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
+                    <AlertTriangle className="w-5 h-5 text-red-500" />
                     Unusual Activity
                   </h3>
                   <div className="space-y-3">
                     {unusual.map((item, i) => (
                       <div
                         key={i}
-                        className="flex items-center justify-between py-2 border-b border-[#EF4444]/10 last:border-0"
+                        className="flex items-center justify-between py-2 border-b border-red-500/10 last:border-0"
                       >
                         <div>
-                          <p className="text-sm text-[#1F2937]">
+                          <p className="text-sm text-foreground">
                             {item.description}
                           </p>
-                          <p className="text-xs text-[#6B7280]">{item.date}</p>
+                          <p className="text-xs text-muted-foreground">{item.date}</p>
                         </div>
-                        <span className="text-sm font-medium text-[#EF4444]">
+                        <span className="text-sm font-medium text-red-500">
                           ${item.amount.toFixed(2)}
                         </span>
                       </div>

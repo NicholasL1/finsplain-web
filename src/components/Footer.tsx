@@ -4,31 +4,31 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-[#E5E7EB] bg-white">
+    <footer className="border-t border-border bg-background">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
           <div>
             <Link
               href="/"
-              className="text-lg font-heading font-bold text-[#1F2937] mb-4 inline-block"
+              className="text-lg font-heading font-bold text-foreground mb-4 inline-block"
             >
-              Fin<span className="text-[#10B981]">Splain</span>
+              Fin<span className="text-emerald-500">Splain</span>
             </Link>
-            <p className="text-sm text-[#6B7280] leading-relaxed">
+            <p className="text-sm text-muted-foreground leading-relaxed">
               Transform complex financial documents into clear, actionable
               insights.
             </p>
           </div>
 
           <div>
-            <h3 className="font-heading font-semibold text-[#1F2937] mb-4 text-sm">
+            <h3 className="font-heading font-semibold text-foreground mb-4 text-sm">
               Product
             </h3>
             <ul className="space-y-2.5">
               <li>
                 <Link
                   href="/how-it-works"
-                  className="text-sm text-[#6B7280] hover:text-[#1F2937] transition-colors"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   How It Works
                 </Link>
@@ -36,7 +36,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/sign-up"
-                  className="text-sm text-[#6B7280] hover:text-[#1F2937] transition-colors"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   Get Started
                 </Link>
@@ -45,14 +45,14 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="font-heading font-semibold text-[#1F2937] mb-4 text-sm">
+            <h3 className="font-heading font-semibold text-foreground mb-4 text-sm">
               Legal
             </h3>
             <ul className="space-y-2.5">
               <li>
                 <Link
                   href="/privacy"
-                  className="text-sm text-[#6B7280] hover:text-[#1F2937] transition-colors"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   Privacy Policy
                 </Link>
@@ -60,7 +60,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/terms"
-                  className="text-sm text-[#6B7280] hover:text-[#1F2937] transition-colors"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   Terms of Service
                 </Link>
@@ -68,7 +68,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="#"
-                  className="text-sm text-[#6B7280] hover:text-[#1F2937] transition-colors"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   Security
                 </Link>
@@ -77,14 +77,14 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="font-heading font-semibold text-[#1F2937] mb-4 text-sm">
+            <h3 className="font-heading font-semibold text-foreground mb-4 text-sm">
               Support
             </h3>
             <ul className="space-y-2.5">
               <li>
                 <Link
                   href="#"
-                  className="text-sm text-[#6B7280] hover:text-[#1F2937] transition-colors"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   Help Center
                 </Link>
@@ -92,7 +92,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/contact"
-                  className="text-sm text-[#6B7280] hover:text-[#1F2937] transition-colors"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   Contact Us
                 </Link>
@@ -100,7 +100,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="#"
-                  className="text-sm text-[#6B7280] hover:text-[#1F2937] transition-colors"
+                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
                   Status
                 </Link>
@@ -109,8 +109,8 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-[#E5E7EB]">
-          <div className="text-sm text-[#6B7280]">
+        <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-border">
+          <div className="text-sm text-muted-foreground">
             © {currentYear} FinSplain. All rights reserved.
           </div>
         </div>
