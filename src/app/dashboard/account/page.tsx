@@ -15,7 +15,7 @@ export default async function AccountPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Navbar />
       <AccountSettings userEmail={user.email || ""} />
     </div>

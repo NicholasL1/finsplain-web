@@ -46,13 +46,13 @@ export function SignUpForm({ message }: { message?: Message }) {
       <input type="hidden" name="site_url" value={siteUrl} />
 
       <div className="space-y-2 text-center">
-        <h1 className="font-heading text-2xl font-bold text-[#1F2937] tracking-tight">
+        <h1 className="font-heading text-2xl font-bold text-foreground tracking-tight">
           Create your account
         </h1>
-        <p className="text-sm text-[#6B7280]">
+        <p className="text-sm text-muted-foreground">
           Already have an account?{" "}
           <Link
-            className="text-[#10B981] font-medium hover:underline transition-all"
+            className="text-emerald-500 font-medium hover:underline transition-all"
             href="/sign-in"
           >
             Sign in
@@ -64,7 +64,7 @@ export function SignUpForm({ message }: { message?: Message }) {
         <div className="space-y-2">
           <Label
             htmlFor="full_name"
-            className="text-sm font-medium text-[#1F2937]"
+            className="text-sm font-medium text-foreground"
           >
             Full Name
           </Label>
@@ -74,12 +74,12 @@ export function SignUpForm({ message }: { message?: Message }) {
             type="text"
             placeholder="John Doe"
             required
-            className="w-full border-[#E5E7EB] focus:border-[#10B981] focus:ring-[#10B981] rounded-xl"
+            className="w-full border-border focus:border-emerald-500 focus:ring-emerald-500 rounded-xl"
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="email" className="text-sm font-medium text-[#1F2937]">
+          <Label htmlFor="email" className="text-sm font-medium text-foreground">
             Email
           </Label>
           <Input
@@ -88,14 +88,14 @@ export function SignUpForm({ message }: { message?: Message }) {
             type="email"
             placeholder="you@example.com"
             required
-            className="w-full border-[#E5E7EB] focus:border-[#10B981] focus:ring-[#10B981] rounded-xl"
+            className="w-full border-border focus:border-emerald-500 focus:ring-emerald-500 rounded-xl"
           />
         </div>
 
         <div className="space-y-2">
           <Label
             htmlFor="password"
-            className="text-sm font-medium text-[#1F2937]"
+            className="text-sm font-medium text-foreground"
           >
             Password
           </Label>
@@ -109,7 +109,7 @@ export function SignUpForm({ message }: { message?: Message }) {
               setPassword(e.target.value);
               if (!showStrength) setShowStrength(true);
             }}
-            className="w-full border-[#E5E7EB] focus:border-[#10B981] focus:ring-[#10B981] rounded-xl"
+            className="w-full border-border focus:border-emerald-500 focus:ring-emerald-500 rounded-xl"
           />
 
           {showStrength && (
@@ -120,16 +120,16 @@ export function SignUpForm({ message }: { message?: Message }) {
                   <li key={key} className="flex items-center gap-2 text-xs">
                     <span
                       className={`flex-shrink-0 w-4 h-4 rounded-full flex items-center justify-center ${
-                        met ? "bg-[#10B981]/15" : "bg-[#F3F4F6]"
+                        met ? "bg-emerald-500/15" : "bg-muted"
                       }`}
                     >
                       {met ? (
-                        <Check className="w-2.5 h-2.5 text-[#10B981]" />
+                        <Check className="w-2.5 h-2.5 text-emerald-500" />
                       ) : (
-                        <X className="w-2.5 h-2.5 text-[#9CA3AF]" />
+                        <X className="w-2.5 h-2.5 text-muted-foreground" />
                       )}
                     </span>
-                    <span className={met ? "text-[#059669]" : "text-[#9CA3AF]"}>
+                    <span className={met ? "text-emerald-600 dark:text-emerald-400" : "text-muted-foreground"}>
                       {label}
                     </span>
                   </li>
@@ -144,7 +144,7 @@ export function SignUpForm({ message }: { message?: Message }) {
         formAction={signUpAction}
         pendingText="Signing up..."
         disabled={!passwordValid}
-        className="w-full bg-[#10B981] hover:bg-[#059669] text-white rounded-xl h-11 text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed"
+        className="w-full bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl h-11 text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed"
       >
         Sign up
       </SubmitButton>

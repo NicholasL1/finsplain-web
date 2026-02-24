@@ -6,16 +6,16 @@ import { ArrowRight, Shield } from "lucide-react";
 
 export default function HowItWorksPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Navbar />
 
       {/* Hero */}
       <section className="pt-20 pb-12 sm:pt-28 sm:pb-16">
         <div className="container mx-auto px-4 text-center max-w-2xl">
-          <h1 className="font-heading text-[40px] sm:text-[48px] font-bold text-[#1F2937] mb-4 leading-tight tracking-tight">
+          <h1 className="font-heading text-[40px] sm:text-[48px] font-bold text-foreground mb-4 leading-tight tracking-tight">
             How FinSplain Works
           </h1>
-          <p className="text-lg text-[#6B7280] leading-relaxed">
+          <p className="text-lg text-muted-foreground leading-relaxed">
             From upload to insight in under 30 seconds. No sign-up required to
             try it out.
           </p>
@@ -25,9 +25,9 @@ export default function HowItWorksPage() {
       <ProcessSteps />
 
       {/* Detail Cards */}
-      <section className="py-20 sm:py-24 bg-[#F9FAFB]">
+      <section className="py-20 sm:py-24 bg-muted">
         <div className="container mx-auto px-4 max-w-4xl">
-          <h2 className="font-heading text-2xl sm:text-3xl font-bold text-[#1F2937] mb-12 text-center">
+          <h2 className="font-heading text-2xl sm:text-3xl font-bold text-foreground mb-12 text-center">
             What We Analyze
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
@@ -59,16 +59,16 @@ export default function HowItWorksPage() {
             ].map((item) => (
               <div
                 key={item.title}
-                className="p-6 rounded-2xl border border-[#E5E7EB] bg-white"
+                className="p-6 rounded-2xl border border-border bg-card"
               >
                 <div
                   className="w-2 h-2 rounded-full mb-4"
                   style={{ backgroundColor: item.color }}
                 />
-                <h3 className="font-heading text-lg font-semibold text-[#1F2937] mb-2">
+                <h3 className="font-heading text-lg font-semibold text-card-foreground mb-2">
                   {item.title}
                 </h3>
-                <p className="text-[#6B7280] text-sm leading-relaxed">
+                <p className="text-muted-foreground text-sm leading-relaxed">
                   {item.description}
                 </p>
               </div>
@@ -80,26 +80,26 @@ export default function HowItWorksPage() {
       {/* CTA */}
       <section className="py-20">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="font-heading text-3xl font-bold text-[#1F2937] mb-4">
+          <h2 className="font-heading text-3xl font-bold text-foreground mb-4">
             Ready to try it?
           </h2>
-          <p className="text-[#6B7280] mb-8 max-w-md mx-auto text-base leading-relaxed">
+          <p className="text-muted-foreground mb-8 max-w-md mx-auto text-base leading-relaxed">
             Sign up in seconds and upload your first document. No credit card
             required.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/sign-up"
-              className="inline-flex items-center justify-center px-7 py-3.5 text-white bg-[#10B981] rounded-xl hover:bg-[#059669] transition-all duration-150 text-base font-medium active:scale-[0.98]"
+              className="inline-flex items-center justify-center px-7 py-3.5 text-white bg-emerald-500 rounded-xl hover:bg-emerald-600 transition-all duration-150 text-base font-medium active:scale-[0.98]"
             >
               Get Started Free
               <ArrowRight className="ml-2 w-4 h-4" />
             </Link>
             <Link
               href="/privacy"
-              className="inline-flex items-center justify-center px-7 py-3.5 text-[#1F2937] border border-[#E5E7EB] rounded-xl hover:bg-[#F9FAFB] transition-all duration-150 text-base font-medium"
+              className="inline-flex items-center justify-center px-7 py-3.5 text-foreground border border-border rounded-xl hover:bg-accent transition-all duration-150 text-base font-medium"
             >
-              <Shield className="mr-2 w-4 h-4 text-[#6B7280]" />
+              <Shield className="mr-2 w-4 h-4 text-muted-foreground" />
               View Privacy Policy
             </Link>
           </div>

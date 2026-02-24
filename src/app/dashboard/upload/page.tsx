@@ -15,14 +15,14 @@ export default async function UploadPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <Navbar />
       <main className="container mx-auto px-4 py-12 sm:py-16">
         <div className="text-center mb-10">
-          <h1 className="font-heading text-2xl sm:text-3xl font-bold text-[#1F2937] mb-2">
+          <h1 className="font-heading text-2xl sm:text-3xl font-bold text-foreground mb-2">
             Upload Document
           </h1>
-          <p className="text-[#6B7280] text-sm">
+          <p className="text-muted-foreground text-sm">
             Upload a financial document to get clear, actionable insights.
           </p>
         </div>

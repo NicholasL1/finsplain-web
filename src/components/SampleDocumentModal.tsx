@@ -102,13 +102,13 @@ export default function SampleDocumentModal() {
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <button className="inline-flex items-center px-7 py-3.5 text-[#1F2937] border border-[#E5E7EB] rounded-xl hover:bg-[#F9FAFB] transition-all duration-150 text-base font-medium active:scale-[0.98]">
-          <FileText className="mr-2 w-4 h-4 text-[#6B7280]" />
+        <button className="inline-flex items-center px-7 py-3.5 text-foreground border border-border rounded-xl hover:bg-accent transition-all duration-150 text-base font-medium active:scale-[0.98]">
+          <FileText className="mr-2 w-4 h-4 text-muted-foreground" />
           Try a Sample Document
         </button>
       </DialogTrigger>
 
-      <DialogContent className="max-w-3xl w-full p-0 bg-white overflow-hidden">
+      <DialogContent className="max-w-3xl w-full p-0 bg-background overflow-hidden">
         <DialogTitle className="sr-only">Sample Document Analysis</DialogTitle>
         <DialogDescription className="sr-only">
           Preview of Finsplain analysis results using a sample bank statement.
@@ -126,33 +126,33 @@ export default function SampleDocumentModal() {
                   <div
                     key={i}
                     className={`flex items-center gap-4 py-3.5 ${
-                      i < STEPS.length - 1 ? "border-b border-[#F3F4F6]" : ""
+                      i < STEPS.length - 1 ? "border-b border-border/50" : ""
                     }`}
                   >
                     <div
                       className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 ${
                         isComplete
-                          ? "bg-[#10B981]/10"
+                          ? "bg-emerald-500/10"
                           : isActive
-                            ? "bg-[#F59E0B]/10"
-                            : "bg-[#F3F4F6]"
+                            ? "bg-amber-500/10"
+                            : "bg-muted"
                       }`}
                     >
                       {isComplete ? (
-                        <Check className="w-4 h-4 text-[#10B981]" />
+                        <Check className="w-4 h-4 text-emerald-500" />
                       ) : isActive ? (
-                        <Loader2 className="w-4 h-4 text-[#F59E0B] animate-spin" />
+                        <Loader2 className="w-4 h-4 text-amber-500 animate-spin" />
                       ) : (
-                        <Icon className="w-4 h-4 text-[#9CA3AF]" />
+                        <Icon className="w-4 h-4 text-muted-foreground" />
                       )}
                     </div>
                     <span
                       className={`text-sm font-medium ${
                         isComplete
-                          ? "text-[#10B981]"
+                          ? "text-emerald-600 dark:text-emerald-400"
                           : isActive
-                            ? "text-[#1F2937]"
-                            : "text-[#9CA3AF]"
+                            ? "text-foreground"
+                            : "text-muted-foreground"
                       }`}
                     >
                       {s.label}
@@ -160,17 +160,17 @@ export default function SampleDocumentModal() {
                     </span>
                     <span className="ml-auto text-xs">
                       {isComplete && (
-                        <span className="text-[#10B981]">Done</span>
+                        <span className="text-emerald-600 dark:text-emerald-400">Done</span>
                       )}
                       {isActive && (
-                        <span className="text-[#6B7280]">Working...</span>
+                        <span className="text-muted-foreground">Working...</span>
                       )}
                     </span>
                   </div>
                 );
               })}
             </div>
-            <p className="mt-8 text-sm text-[#9CA3AF]">
+            <p className="mt-8 text-sm text-muted-foreground">
               Analyzing {SAMPLE.filename}
             </p>
           </div>
@@ -180,15 +180,15 @@ export default function SampleDocumentModal() {
         {phase === "results" && (
           <div className="overflow-y-auto" style={{ maxHeight: "85vh" }}>
             {/* Demo banner */}
-            <div className="bg-[#FFFBEB] border-b border-[#F59E0B]/30 px-6 py-3 flex items-center justify-between gap-4">
-              <p className="text-sm text-[#92400E]">
+            <div className="bg-amber-500/10 border-b border-amber-500/30 px-6 py-3 flex items-center justify-between gap-4">
+              <p className="text-sm text-amber-800 dark:text-amber-300">
                 <span className="font-semibold">Sample data</span> — this is
                 what your analysis looks like. Sign up to analyze your own
                 documents.
               </p>
               <Link
                 href="/sign-up"
-                className="flex-shrink-0 text-sm font-semibold text-[#92400E] underline underline-offset-2 hover:no-underline whitespace-nowrap"
+                className="flex-shrink-0 text-sm font-semibold text-amber-800 dark:text-amber-300 underline underline-offset-2 hover:no-underline whitespace-nowrap"
               >
                 Get started →
               </Link>
@@ -198,61 +198,61 @@ export default function SampleDocumentModal() {
               {/* Document header */}
               <div className="flex items-start gap-3 mb-6">
                 <div className="flex-1 min-w-0">
-                  <h2 className="font-heading text-lg font-bold text-[#1F2937]">
+                  <h2 className="font-heading text-lg font-bold text-foreground">
                     {SAMPLE.filename}
                   </h2>
-                  <p className="text-sm text-[#6B7280] mt-0.5">
+                  <p className="text-sm text-muted-foreground mt-0.5">
                     Uploaded {SAMPLE.date}
                   </p>
                 </div>
-                <span className="flex-shrink-0 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#10B981]/10 text-[#059669]">
+                <span className="flex-shrink-0 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
                   Complete
                 </span>
               </div>
 
               {/* Summary grid */}
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
-                <div className="p-4 rounded-2xl border border-[#E5E7EB] bg-white">
-                  <div className="w-8 h-8 rounded-lg bg-[#F59E0B]/10 flex items-center justify-center mb-2">
-                    <DollarSign className="w-4 h-4 text-[#F59E0B]" />
+                <div className="p-4 rounded-2xl border border-border bg-card">
+                  <div className="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center mb-2">
+                    <DollarSign className="w-4 h-4 text-amber-500" />
                   </div>
-                  <div className="font-heading text-xl font-bold text-[#1F2937]">
+                  <div className="font-heading text-xl font-bold text-foreground">
                     ${SAMPLE.summary.totalFees.toFixed(2)}
                   </div>
-                  <div className="text-xs text-[#6B7280] mt-0.5">
+                  <div className="text-xs text-muted-foreground mt-0.5">
                     Total Fees Found
                   </div>
                 </div>
-                <div className="p-4 rounded-2xl border border-[#E5E7EB] bg-white">
-                  <div className="w-8 h-8 rounded-lg bg-[#10B981]/10 flex items-center justify-center mb-2">
-                    <RefreshCw className="w-4 h-4 text-[#10B981]" />
+                <div className="p-4 rounded-2xl border border-border bg-card">
+                  <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center mb-2">
+                    <RefreshCw className="w-4 h-4 text-emerald-500" />
                   </div>
-                  <div className="font-heading text-xl font-bold text-[#1F2937]">
+                  <div className="font-heading text-xl font-bold text-foreground">
                     {SAMPLE.summary.subscriptions}
                   </div>
-                  <div className="text-xs text-[#6B7280] mt-0.5">
+                  <div className="text-xs text-muted-foreground mt-0.5">
                     Subscriptions
                   </div>
                 </div>
-                <div className="p-4 rounded-2xl border border-[#E5E7EB] bg-white">
-                  <div className="w-8 h-8 rounded-lg bg-[#EF4444]/10 flex items-center justify-center mb-2">
-                    <AlertTriangle className="w-4 h-4 text-[#EF4444]" />
+                <div className="p-4 rounded-2xl border border-border bg-card">
+                  <div className="w-8 h-8 rounded-lg bg-red-500/10 flex items-center justify-center mb-2">
+                    <AlertTriangle className="w-4 h-4 text-red-500" />
                   </div>
-                  <div className="font-heading text-xl font-bold text-[#1F2937]">
+                  <div className="font-heading text-xl font-bold text-foreground">
                     {SAMPLE.summary.unusual}
                   </div>
-                  <div className="text-xs text-[#6B7280] mt-0.5">
+                  <div className="text-xs text-muted-foreground mt-0.5">
                     Unusual Activities
                   </div>
                 </div>
-                <div className="p-4 rounded-2xl border border-[#E5E7EB] bg-white">
-                  <div className="w-8 h-8 rounded-lg bg-[#10B981]/10 flex items-center justify-center mb-2">
-                    <TrendingDown className="w-4 h-4 text-[#10B981]" />
+                <div className="p-4 rounded-2xl border border-border bg-card">
+                  <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center mb-2">
+                    <TrendingDown className="w-4 h-4 text-emerald-500" />
                   </div>
-                  <div className="font-heading text-xl font-bold text-[#1F2937]">
+                  <div className="font-heading text-xl font-bold text-foreground">
                     ${SAMPLE.summary.savings.toFixed(2)}
                   </div>
-                  <div className="text-xs text-[#6B7280] mt-0.5">
+                  <div className="text-xs text-muted-foreground mt-0.5">
                     Potential Savings
                   </div>
                 </div>
@@ -261,21 +261,21 @@ export default function SampleDocumentModal() {
               {/* Detailed sections */}
               <div className="grid lg:grid-cols-2 gap-4">
                 {/* Fees */}
-                <div className="rounded-2xl border border-[#E5E7EB] p-5">
-                  <h3 className="font-heading text-base font-semibold text-[#1F2937] mb-3 flex items-center gap-2">
-                    <DollarSign className="w-4 h-4 text-[#F59E0B]" />
+                <div className="rounded-2xl border border-border p-5">
+                  <h3 className="font-heading text-base font-semibold text-foreground mb-3 flex items-center gap-2">
+                    <DollarSign className="w-4 h-4 text-amber-500" />
                     Fees Identified
                   </h3>
                   <div className="space-y-1">
                     {SAMPLE.fees.map((fee, i) => (
                       <div
                         key={i}
-                        className="flex items-center justify-between py-2 border-b border-[#F3F4F6] last:border-0"
+                        className="flex items-center justify-between py-2 border-b border-border/50 last:border-0"
                       >
-                        <span className="text-sm text-[#1F2937]">
+                        <span className="text-sm text-foreground">
                           {fee.name}
                         </span>
-                        <span className="text-sm font-medium text-[#F59E0B]">
+                        <span className="text-sm font-medium text-amber-600 dark:text-amber-400">
                           ${fee.amount.toFixed(2)}
                         </span>
                       </div>
@@ -284,26 +284,26 @@ export default function SampleDocumentModal() {
                 </div>
 
                 {/* Subscriptions */}
-                <div className="rounded-2xl border border-[#E5E7EB] p-5">
-                  <h3 className="font-heading text-base font-semibold text-[#1F2937] mb-3 flex items-center gap-2">
-                    <RefreshCw className="w-4 h-4 text-[#10B981]" />
+                <div className="rounded-2xl border border-border p-5">
+                  <h3 className="font-heading text-base font-semibold text-foreground mb-3 flex items-center gap-2">
+                    <RefreshCw className="w-4 h-4 text-emerald-500" />
                     Active Subscriptions
                   </h3>
                   <div className="space-y-1">
                     {SAMPLE.subscriptions.map((sub, i) => (
                       <div
                         key={i}
-                        className="flex items-center justify-between py-2 border-b border-[#F3F4F6] last:border-0"
+                        className="flex items-center justify-between py-2 border-b border-border/50 last:border-0"
                       >
                         <div>
-                          <span className="text-sm text-[#1F2937]">
+                          <span className="text-sm text-foreground">
                             {sub.name}
                           </span>
-                          <span className="text-xs text-[#6B7280] ml-2">
+                          <span className="text-xs text-muted-foreground ml-2">
                             {sub.frequency}
                           </span>
                         </div>
-                        <span className="text-sm font-medium text-[#1F2937]">
+                        <span className="text-sm font-medium text-foreground">
                           ${sub.amount.toFixed(2)}
                         </span>
                       </div>
@@ -312,18 +312,18 @@ export default function SampleDocumentModal() {
                 </div>
 
                 {/* Spending Patterns */}
-                <div className="rounded-2xl border border-[#E5E7EB] p-5">
-                  <h3 className="font-heading text-base font-semibold text-[#1F2937] mb-3 flex items-center gap-2">
-                    <TrendingDown className="w-4 h-4 text-[#6366F1]" />
+                <div className="rounded-2xl border border-border p-5">
+                  <h3 className="font-heading text-base font-semibold text-foreground mb-3 flex items-center gap-2">
+                    <TrendingDown className="w-4 h-4 text-indigo-500" />
                     Spending Patterns
                   </h3>
                   <ul className="space-y-3">
                     {SAMPLE.patterns.map((pattern, i) => (
                       <li
                         key={i}
-                        className="flex items-start gap-3 text-sm text-[#6B7280]"
+                        className="flex items-start gap-3 text-sm text-muted-foreground"
                       >
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#6366F1] mt-1.5 flex-shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-1.5 flex-shrink-0" />
                         {pattern}
                       </li>
                     ))}
@@ -331,24 +331,24 @@ export default function SampleDocumentModal() {
                 </div>
 
                 {/* Unusual Activity */}
-                <div className="rounded-2xl border border-[#EF4444]/20 bg-[#EF4444]/5 p-5">
-                  <h3 className="font-heading text-base font-semibold text-[#1F2937] mb-3 flex items-center gap-2">
-                    <AlertTriangle className="w-4 h-4 text-[#EF4444]" />
+                <div className="rounded-2xl border border-red-500/20 bg-red-500/5 p-5">
+                  <h3 className="font-heading text-base font-semibold text-foreground mb-3 flex items-center gap-2">
+                    <AlertTriangle className="w-4 h-4 text-red-500" />
                     Unusual Activity
                   </h3>
                   <div className="space-y-1">
                     {SAMPLE.unusual.map((item, i) => (
                       <div
                         key={i}
-                        className="flex items-center justify-between py-2 border-b border-[#EF4444]/10 last:border-0"
+                        className="flex items-center justify-between py-2 border-b border-red-500/10 last:border-0"
                       >
                         <div>
-                          <p className="text-sm text-[#1F2937]">
+                          <p className="text-sm text-foreground">
                             {item.description}
                           </p>
-                          <p className="text-xs text-[#6B7280]">{item.date}</p>
+                          <p className="text-xs text-muted-foreground">{item.date}</p>
                         </div>
-                        <span className="text-sm font-medium text-[#EF4444]">
+                        <span className="text-sm font-medium text-red-500">
                           ${item.amount.toFixed(2)}
                         </span>
                       </div>
@@ -358,18 +358,18 @@ export default function SampleDocumentModal() {
               </div>
 
               {/* Footer CTA */}
-              <div className="mt-8 pt-6 border-t border-[#E5E7EB] text-center">
-                <p className="text-sm text-[#6B7280] mb-4">
+              <div className="mt-8 pt-6 border-t border-border text-center">
+                <p className="text-sm text-muted-foreground mb-4">
                   Ready to analyze your own financial documents?
                 </p>
                 <Link
                   href="/sign-up"
-                  className="inline-flex items-center px-7 py-3 text-white bg-[#10B981] rounded-xl hover:bg-[#059669] transition-all duration-150 text-base font-medium active:scale-[0.98]"
+                  className="inline-flex items-center px-7 py-3 text-white bg-emerald-500 rounded-xl hover:bg-emerald-600 transition-all duration-150 text-base font-medium active:scale-[0.98]"
                 >
                   Get Started Free
                   <ArrowRight className="ml-2 w-4 h-4" />
                 </Link>
-                <p className="text-xs text-[#9CA3AF] mt-3">
+                <p className="text-xs text-muted-foreground mt-3">
                   No credit card required
                 </p>
               </div>

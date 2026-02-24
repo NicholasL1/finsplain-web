@@ -26,7 +26,7 @@ function getStrengthChecks(password: string) {
   };
 }
 
-export function ResetPasswordForm({ message }: { message?: Message }) {
+export function ResetPasswordForm({ message }: Readonly<{ message?: Message }>) {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showStrength, setShowStrength] = useState(false);
@@ -41,10 +41,10 @@ export function ResetPasswordForm({ message }: { message?: Message }) {
   return (
     <form className="flex flex-col space-y-6">
       <div className="space-y-2 text-center">
-        <h1 className="font-heading text-2xl font-bold text-[#1F2937] tracking-tight">
+        <h1 className="font-heading text-2xl font-bold text-foreground tracking-tight">
           Reset password
         </h1>
-        <p className="text-sm text-[#6B7280]">
+        <p className="text-sm text-muted-foreground">
           Please enter your new password below.
         </p>
       </div>
@@ -54,7 +54,7 @@ export function ResetPasswordForm({ message }: { message?: Message }) {
         <div className="space-y-2">
           <Label
             htmlFor="password"
-            className="text-sm font-medium text-[#1F2937]"
+            className="text-sm font-medium text-foreground"
           >
             New password
           </Label>
@@ -68,7 +68,7 @@ export function ResetPasswordForm({ message }: { message?: Message }) {
               setPassword(e.target.value);
               if (!showStrength) setShowStrength(true);
             }}
-            className="w-full border-[#E5E7EB] focus:border-[#10B981] focus:ring-[#10B981] rounded-xl"
+            className="w-full border-border focus:border-emerald-500 focus:ring-emerald-500 rounded-xl"
           />
 
           {showStrength && (
@@ -79,16 +79,16 @@ export function ResetPasswordForm({ message }: { message?: Message }) {
                   <li key={key} className="flex items-center gap-2 text-xs">
                     <span
                       className={`flex-shrink-0 w-4 h-4 rounded-full flex items-center justify-center ${
-                        met ? "bg-[#10B981]/15" : "bg-[#F3F4F6]"
+                        met ? "bg-emerald-500/15" : "bg-muted"
                       }`}
                     >
                       {met ? (
-                        <Check className="w-2.5 h-2.5 text-[#10B981]" />
+                        <Check className="w-2.5 h-2.5 text-emerald-500" />
                       ) : (
-                        <X className="w-2.5 h-2.5 text-[#9CA3AF]" />
+                        <X className="w-2.5 h-2.5 text-muted-foreground" />
                       )}
                     </span>
-                    <span className={met ? "text-[#059669]" : "text-[#9CA3AF]"}>
+                    <span className={met ? "text-emerald-600 dark:text-emerald-400" : "text-muted-foreground"}>
                       {label}
                     </span>
                   </li>
@@ -102,7 +102,7 @@ export function ResetPasswordForm({ message }: { message?: Message }) {
         <div className="space-y-2">
           <Label
             htmlFor="confirmPassword"
-            className="text-sm font-medium text-[#1F2937]"
+            className="text-sm font-medium text-foreground"
           >
             Confirm password
           </Label>
@@ -118,14 +118,14 @@ export function ResetPasswordForm({ message }: { message?: Message }) {
             }}
             className={`w-full rounded-xl ${
               touchedConfirm && confirmHasContent && !passwordsMatch
-                ? "border-[#EF4444] focus:border-[#EF4444] focus:ring-[#EF4444]"
-                : "border-[#E5E7EB] focus:border-[#10B981] focus:ring-[#10B981]"
+                ? "border-red-500 focus:border-red-500 focus:ring-red-500"
+                : "border-border focus:border-emerald-500 focus:ring-emerald-500"
             }`}
           />
           {touchedConfirm && confirmHasContent && (
             <p
               className={`text-xs flex items-center gap-1.5 ${
-                passwordsMatch ? "text-[#059669]" : "text-[#EF4444]"
+                passwordsMatch ? "text-emerald-600 dark:text-emerald-400" : "text-red-500"
               }`}
             >
               {passwordsMatch ? (
@@ -146,7 +146,7 @@ export function ResetPasswordForm({ message }: { message?: Message }) {
         formAction={resetPasswordAction}
         pendingText="Resetting password..."
         disabled={!canSubmit}
-        className="w-full bg-[#10B981] hover:bg-[#059669] text-white rounded-xl h-11 text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed"
+        className="w-full bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl h-11 text-sm font-medium disabled:opacity-40 disabled:cursor-not-allowed"
       >
         Reset password
       </SubmitButton>

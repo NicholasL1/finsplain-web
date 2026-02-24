@@ -305,10 +305,10 @@ export default function UploadCard() {
     return (
       <div className="max-w-lg mx-auto space-y-8">
         <div className="text-center">
-          <h2 className="font-heading text-2xl font-semibold text-[#1F2937] mb-2">
+          <h2 className="font-heading text-2xl font-semibold text-foreground mb-2">
             Analyzing your document
           </h2>
-          <p className="text-sm text-[#6B7280]">
+          <p className="text-sm text-muted-foreground">
             This usually takes under a minute.
           </p>
         </div>
@@ -323,9 +323,9 @@ export default function UploadCard() {
                 key={step.id}
                 className={cn(
                   "flex items-center gap-4 px-5 py-4 rounded-2xl border transition-all duration-500",
-                  state === "active" && "border-indigo-400 bg-white shadow-sm",
-                  state === "complete" && "border-[#E5E7EB] bg-white",
-                  state === "pending" && "border-[#F3F4F6] bg-[#F9FAFB]"
+                  state === "active" && "border-indigo-400 bg-card shadow-sm",
+                  state === "complete" && "border-border bg-card",
+                  state === "pending" && "border-border/50 bg-muted/50"
                 )}
               >
                 {/* Left icon */}
@@ -334,7 +334,7 @@ export default function UploadCard() {
                     "flex h-8 w-8 items-center justify-center",
                     state === "complete" && "text-emerald-500",
                     state === "active" && "text-indigo-500",
-                    state === "pending" && "text-[#D1D5DB]"
+                    state === "pending" && "text-muted-foreground/40"
                   )}
                 >
                   {state === "complete" ? (
@@ -350,7 +350,7 @@ export default function UploadCard() {
                 <span
                   className={cn(
                     "flex-1 text-sm font-medium",
-                    state === "pending" ? "text-[#9CA3AF]" : "text-[#1F2937]"
+                    state === "pending" ? "text-muted-foreground" : "text-foreground"
                   )}
                 >
                   {step.label}
@@ -374,11 +374,11 @@ export default function UploadCard() {
         <div className="text-center space-y-2 pt-2">
           <div className="flex items-center justify-center gap-1.5">
             <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
-            <span className="text-xs font-semibold tracking-widest text-[#9CA3AF] uppercase">
+            <span className="text-xs font-semibold tracking-widest text-muted-foreground uppercase">
               Secure Processing
             </span>
           </div>
-          <p className="text-xs text-[#6B7280] leading-relaxed">
+          <p className="text-xs text-muted-foreground leading-relaxed">
             You can leave and return later. We&apos;ll notify
             <br />
             you when the analysis is complete.
@@ -399,8 +399,8 @@ export default function UploadCard() {
         className={cn(
           "rounded-2xl border-2 border-dashed p-10 sm:p-12 text-center transition-all duration-200",
           isDragging
-            ? "border-emerald-500 bg-emerald-50"
-            : "border-[#E5E7EB] bg-white hover:border-emerald-300 hover:bg-[#F9FAFB]"
+            ? "border-emerald-500 bg-emerald-500/5"
+            : "border-border bg-background hover:border-emerald-300 hover:bg-muted/50"
         )}
       >
         <input
@@ -411,14 +411,14 @@ export default function UploadCard() {
           onChange={handleFileChange}
         />
 
-        <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#F3F4F6]">
-          <Upload className="h-6 w-6 text-[#6B7280]" />
+        <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-muted">
+          <Upload className="h-6 w-6 text-muted-foreground" />
         </div>
 
-        <h2 className="font-heading text-xl font-semibold text-[#1F2937] mb-2">
+        <h2 className="font-heading text-xl font-semibold text-foreground mb-2">
           Upload a financial document
         </h2>
-        <p className="text-sm text-[#6B7280] leading-relaxed mb-8">
+        <p className="text-sm text-muted-foreground leading-relaxed mb-8">
           PDFs or photos of bank statements, credit card statements,
           <br className="hidden sm:block" /> or pay stubs.
         </p>
@@ -432,7 +432,7 @@ export default function UploadCard() {
           </button>
           <button
             onClick={handleTrySample}
-            className="text-sm text-[#6B7280] hover:text-[#1F2937] transition-colors"
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             Try a sample document
           </button>
@@ -440,14 +440,14 @@ export default function UploadCard() {
       </div>
 
       {error && (
-        <div className="flex items-center gap-2 text-sm text-red-600 bg-red-50 rounded-xl px-4 py-3">
+        <div className="flex items-center gap-2 text-sm text-red-600 bg-red-500/10 rounded-xl px-4 py-3">
           {error}
         </div>
       )}
 
       {/* Supported document types */}
       <div className="text-center space-y-3">
-        <p className="text-xs font-semibold tracking-widest text-[#9CA3AF] uppercase">
+        <p className="text-xs font-semibold tracking-widest text-muted-foreground uppercase">
           Supported Documents
         </p>
         <div className="flex flex-wrap gap-2 justify-center">
@@ -459,7 +459,7 @@ export default function UploadCard() {
           ].map((doc) => (
             <span
               key={doc}
-              className="px-3 py-1.5 text-xs text-[#6B7280] border border-[#E5E7EB] rounded-full bg-white"
+              className="px-3 py-1.5 text-xs text-muted-foreground border border-border rounded-full bg-background"
             >
               {doc}
             </span>
@@ -476,7 +476,7 @@ export default function UploadCard() {
         ].map(({ icon: Icon, label }) => (
           <div
             key={label}
-            className="flex items-center gap-1.5 text-xs text-emerald-600"
+            className="flex items-center gap-1.5 text-xs text-emerald-600 dark:text-emerald-400"
           >
             <Icon className="w-3.5 h-3.5" />
             <span>{label}</span>

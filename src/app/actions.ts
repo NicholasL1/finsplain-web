@@ -225,3 +225,10 @@ export const signOutAction = async () => {
   await supabase.auth.signOut();
   return redirect("/sign-in?toast=signed-out");
 };
+
+export const updateThemeAction = async (theme: string) => {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return;
+  await supabase.auth.updateUser({ data: { theme } });
+};

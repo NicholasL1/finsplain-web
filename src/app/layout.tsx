@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/src/components/ThemeProvider";
 import { Toaster } from "sonner";
 import { Suspense } from "react";
 import { UrlToast } from "@/src/components/UrlToast";
+import { createClient } from "@/supabase/server";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -22,11 +23,15 @@ export const metadata: Metadata = {
     "Transform complex financial documents into clear, actionable insights. Understand fees, subscriptions, and spending patterns without decoding jargon.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  const savedTheme = (user?.user_metadata?.theme as string) || "system";
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -35,7 +40,7 @@ export default function RootLayout({
       >
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
+          defaultTheme={savedTheme}
           enableSystem
           disableTransitionOnChange
         >

@@ -41,13 +41,13 @@ const principles = [
 
 export default function PrivacyPrinciples() {
   return (
-    <section className="py-20 sm:py-24 bg-white">
+    <section className="py-20 sm:py-24 bg-background">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="font-heading text-3xl sm:text-4xl font-bold text-[#1F2937] mb-4">
+          <h2 className="font-heading text-3xl sm:text-4xl font-bold text-foreground mb-4">
             Your Privacy, Our Priority
           </h2>
-          <p className="text-[#6B7280] max-w-xl mx-auto text-base leading-relaxed">
+          <p className="text-muted-foreground max-w-xl mx-auto text-base leading-relaxed">
             We built FinSplain with privacy as a foundational principle, not an
             afterthought.
           </p>
@@ -57,15 +57,15 @@ export default function PrivacyPrinciples() {
           {principles.map((p) => (
             <div
               key={p.title}
-              className="p-6 rounded-2xl border border-[#E5E7EB] bg-white hover:-translate-y-0.5 transition-all duration-150"
+              className="p-6 rounded-2xl border border-border bg-card hover:-translate-y-0.5 transition-all duration-150"
             >
-              <div className="w-10 h-10 rounded-xl bg-[#10B981]/10 flex items-center justify-center mb-4">
-                <p.icon className="w-5 h-5 text-[#10B981]" />
+              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center mb-4">
+                <p.icon className="w-5 h-5 text-emerald-500" />
               </div>
-              <h3 className="font-heading text-lg font-semibold text-[#1F2937] mb-2">
+              <h3 className="font-heading text-lg font-semibold text-card-foreground mb-2">
                 {p.title}
               </h3>
-              <p className="text-[#6B7280] text-sm leading-relaxed">
+              <p className="text-muted-foreground text-sm leading-relaxed">
                 {p.description}
               </p>
             </div>
