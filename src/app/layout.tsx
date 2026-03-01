@@ -21,6 +21,10 @@ export const metadata: Metadata = {
   title: "FinSplain — Understand Your Finances",
   description:
     "Transform complex financial documents into clear, actionable insights. Understand fees, subscriptions, and spending patterns without decoding jargon.",
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default async function RootLayout({

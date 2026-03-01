@@ -6,16 +6,21 @@ import FeatureShowcase from "@/src/components/FeatureShowcase";
 import PrivacyPrinciples from "@/src/components/PrivacyPrinciples";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { createClient } from "@/supabase/server";
 
-export default function Home() {
+export default async function Home() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  const firstName = (user?.user_metadata?.full_name ?? user?.user_metadata?.name ?? "")
+    .trim()
+    .split(" ")[0];
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <Hero />
-      <ProcessSteps />
-      <FeatureShowcase />
+      <Hero firstName={firstName || undefined} />
 
-      {/* Trust/Stats Section */}
+      {/* Trust/Stats Section — immediately below hero */}
       <section className="py-16 bg-muted">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center max-w-4xl mx-auto">
@@ -53,6 +58,8 @@ export default function Home() {
         </div>
       </section>
 
+      <ProcessSteps />
+      <FeatureShowcase />
       <PrivacyPrinciples />
 
       {/* CTA Section */}

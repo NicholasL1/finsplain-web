@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
-import { UserCircle, LogOut, Save, Loader2, Sun, Moon, Monitor } from "lucide-react";
+import { LogOut, Save, Loader2, Sun, Moon, Monitor } from "lucide-react";
 import { createClient } from "../../supabase/client";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
@@ -13,6 +13,7 @@ import { cn } from "@/src/lib/utils";
 
 interface AccountSettingsProps {
   userEmail: string;
+  userFullName?: string;
 }
 
 type ThemeOption = { value: string; label: string; icon: React.ElementType };
@@ -23,8 +24,8 @@ const THEME_OPTIONS: ThemeOption[] = [
   { value: "system", label: "System", icon: Monitor },
 ];
 
-export default function AccountSettings({ userEmail }: AccountSettingsProps) {
-  const [fullName, setFullName] = useState("");
+export default function AccountSettings({ userEmail, userFullName }: AccountSettingsProps) {
+  const [fullName, setFullName] = useState(userFullName ?? "");
   const [isSaving, setIsSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [isSavingTheme, setIsSavingTheme] = useState(false);
@@ -78,19 +79,32 @@ export default function AccountSettings({ userEmail }: AccountSettingsProps) {
 
       {/* Profile Section */}
       <div className="rounded-2xl border border-border p-6 mb-6">
-        <div className="flex items-center gap-4 mb-6">
-          <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 flex items-center justify-center">
-            <UserCircle className="w-7 h-7 text-emerald-500" />
+        {/* Avatar + identity */}
+        <div className="flex flex-col items-center text-center mb-6">
+          <div className="w-16 h-16 rounded-full bg-emerald-500 flex items-center justify-center mb-3 select-none">
+            {fullName ? (
+              <span className="text-white font-bold text-2xl">
+                {fullName.trim()[0].toUpperCase()}
+              </span>
+            ) : (
+              <span className="text-white font-bold text-2xl">
+                {userEmail[0].toUpperCase()}
+              </span>
+            )}
           </div>
-          <div>
-            <h2 className="font-heading text-lg font-semibold text-foreground">
-              Profile
+          {fullName ? (
+            <h2 className="font-heading text-xl font-bold text-foreground">
+              {fullName}
             </h2>
-            <p className="text-sm text-muted-foreground">{userEmail}</p>
-          </div>
+          ) : (
+            <h2 className="font-heading text-xl font-bold text-muted-foreground">
+              No name set
+            </h2>
+          )}
+          <p className="text-sm text-muted-foreground mt-0.5">{userEmail}</p>
         </div>
 
-        <div className="space-y-4">
+        <div className="border-t border-border pt-5 space-y-4">
           <div>
             <Label
               htmlFor="fullName"

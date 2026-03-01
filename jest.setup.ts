@@ -22,6 +22,14 @@ global.ResizeObserver = jest.fn().mockImplementation(() => ({
   disconnect: jest.fn(),
 }));
 
+// Mock IntersectionObserver (required by HowItWorksDemo)
+// Tests that need to trigger intersection manually can override this per-file.
+global.IntersectionObserver = jest.fn().mockImplementation(() => ({
+  observe: jest.fn(),
+  unobserve: jest.fn(),
+  disconnect: jest.fn(),
+}));
+
 // Mock next/navigation globally — tests can override per-file with jest.mocked()
 jest.mock("next/navigation", () => ({
   useRouter: jest.fn().mockReturnValue({

@@ -6,6 +6,7 @@ import { PasswordInput } from "@/src/components/PasswordInput"
 import { Input } from "@/src/components/ui/input"
 import { Label } from "@/src/components/ui/label"
 import { SubmitButton } from "@/src/components/SubmitButton"
+import { GoogleOAuthButton } from "@/src/components/GoogleOAuthButton"
 import Link from "next/link"
 
 const FORGOT_PASSWORD_HINT_AFTER = 5
@@ -72,6 +73,14 @@ export function SignInForm() {
             className="w-full border-border focus:border-emerald-500 focus:ring-emerald-500 rounded-xl"
           />
         </div>
+      </div>
+
+      <GoogleOAuthButton />
+
+      <div className="relative flex items-center gap-3">
+        <div className="flex-1 border-t border-border" />
+        <span className="text-xs text-muted-foreground">or</span>
+        <div className="flex-1 border-t border-border" />
       </div>
 
       <SubmitButton

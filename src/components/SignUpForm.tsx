@@ -7,6 +7,7 @@ import { PasswordInput } from "@/src/components/PasswordInput";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
 import { SubmitButton } from "@/src/components/SubmitButton";
+import { GoogleOAuthButton } from "@/src/components/GoogleOAuthButton";
 import { FormMessage, Message } from "@/src/components/FormMessage";
 import { signUpAction } from "@/src/app/actions";
 
@@ -136,6 +137,14 @@ export function SignUpForm({ message }: { message?: Message }) {
             </ul>
           )}
         </div>
+      </div>
+
+      <GoogleOAuthButton />
+
+      <div className="relative flex items-center gap-3">
+        <div className="flex-1 border-t border-border" />
+        <span className="text-xs text-muted-foreground">or</span>
+        <div className="flex-1 border-t border-border" />
       </div>
 
       <SubmitButton
