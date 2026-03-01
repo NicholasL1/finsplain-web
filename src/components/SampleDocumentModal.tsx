@@ -21,6 +21,16 @@ import {
   DialogDescription,
   DialogTrigger,
 } from "@/src/components/ui/dialog";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
 const SAMPLE = {
   filename: "Sample_Bank_Statement_2024.pdf",
@@ -74,30 +84,53 @@ const STEPS = [
   { label: "Generating insights", icon: BarChart2 },
 ];
 
+const SPENDING_CHART_DATA = [
+  { month: "Oct", Dining: 420, Shopping: 280, Subscriptions: 162, Other: 190 },
+  { month: "Nov", Dining: 380, Shopping: 450, Subscriptions: 162, Other: 210 },
+  { month: "Dec", Dining: 520, Shopping: 680, Subscriptions: 162, Other: 280 },
+  { month: "Jan", Dining: 350, Shopping: 220, Subscriptions: 162, Other: 175 },
+  { month: "Feb", Dining: 440, Shopping: 310, Subscriptions: 162, Other: 195 },
+  { month: "Mar", Dining: 580, Shopping: 340, Subscriptions: 162, Other: 225 },
+];
+
 export default function SampleDocumentModal() {
   const [open, setOpen] = useState(false);
-  const [phase, setPhase] = useState<"processing" | "results">("processing");
+  const [phase, setPhase] = useState<"drag" | "processing" | "results">("drag");
+  const [dragStage, setDragStage] = useState<"flying" | "hovering" | "dropped">("flying");
+  const [cursorPos, setCursorPos] = useState({ x: 160, y: -50 });
   const [step, setStep] = useState(0);
 
   const handleOpenChange = (newOpen: boolean) => {
     if (newOpen) {
-      setPhase("processing");
+      setPhase("drag");
+      setDragStage("flying");
+      setCursorPos({ x: 160, y: -50 });
       setStep(0);
     }
     setOpen(newOpen);
   };
 
+  // Drag phase: cursor flies in, hovers, drops, then advances to processing
   useEffect(() => {
-    if (!open) return;
+    if (!open || phase !== "drag") return;
+    const t1 = setTimeout(() => setCursorPos({ x: 0, y: 0 }), 200);
+    const t2 = setTimeout(() => setDragStage("hovering"), 1600);
+    const t3 = setTimeout(() => setDragStage("dropped"), 2400);
+    const t4 = setTimeout(() => setPhase("processing"), 3200);
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); };
+  }, [open, phase]);
+
+  // Processing phase: step through analysis steps then show results
+  useEffect(() => {
+    if (!open || phase !== "processing") return;
+    setStep(0);
     const t1 = setTimeout(() => setStep(1), 1000);
     const t2 = setTimeout(() => setStep(2), 2500);
     const t3 = setTimeout(() => setPhase("results"), 4000);
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-      clearTimeout(t3);
-    };
-  }, [open]);
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+  }, [open, phase]);
+
+  const isHovering = dragStage === "hovering" || dragStage === "dropped";
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
@@ -113,6 +146,114 @@ export default function SampleDocumentModal() {
         <DialogDescription className="sr-only">
           Preview of Finsplain analysis results using a sample bank statement.
         </DialogDescription>
+
+        {/* Drag phase */}
+        {phase === "drag" && (
+          <div className="flex flex-col items-center justify-center py-14 px-8">
+            <div className="w-full max-w-sm relative">
+              {/* Drop zone */}
+              <div
+                className={`relative rounded-2xl border-2 border-dashed transition-all duration-300 p-10 flex flex-col items-center text-center ${
+                  dragStage === "dropped"
+                    ? "border-emerald-500 bg-emerald-500/5"
+                    : isHovering
+                      ? "border-emerald-400 bg-emerald-500/5 scale-[1.02]"
+                      : "border-border bg-muted/30"
+                }`}
+              >
+                <div
+                  className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-3 transition-all duration-300 ${
+                    dragStage === "dropped" ? "bg-emerald-500/10" : "bg-muted"
+                  }`}
+                >
+                  {dragStage === "dropped" ? (
+                    <Check className="w-6 h-6 text-emerald-500" />
+                  ) : (
+                    <Upload
+                      className={`w-6 h-6 transition-colors duration-300 ${
+                        isHovering ? "text-emerald-500" : "text-muted-foreground"
+                      }`}
+                    />
+                  )}
+                </div>
+
+                {dragStage === "dropped" ? (
+                  <>
+                    <p className="text-sm font-medium text-emerald-600 dark:text-emerald-400">
+                      File received!
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-1">{SAMPLE.filename}</p>
+                  </>
+                ) : (
+                  <>
+                    <p
+                      className={`text-sm font-medium transition-colors duration-300 ${
+                        isHovering
+                          ? "text-emerald-600 dark:text-emerald-400"
+                          : "text-foreground"
+                      }`}
+                    >
+                      {isHovering ? "Release to upload" : "Drop your file here"}
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      PDF, CSV, Excel, or image
+                    </p>
+                  </>
+                )}
+              </div>
+
+              {/* Animated cursor + file chip */}
+              <div
+                style={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: `translate(calc(-50% + ${cursorPos.x}px), calc(-50% + ${cursorPos.y}px))`,
+                  transition:
+                    dragStage === "flying"
+                      ? "transform 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)"
+                      : "none",
+                  zIndex: 20,
+                  pointerEvents: "none",
+                  opacity: dragStage === "dropped" ? 0 : 1,
+                  transitionProperty: "transform, opacity",
+                }}
+              >
+                {/* Mac-style pointer cursor */}
+                <svg
+                  width="20"
+                  height="24"
+                  viewBox="0 0 20 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M3 2L3 19.5L7.5 15L10.5 22L13.5 21L10.5 14H17L3 2Z"
+                    fill="white"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinejoin="round"
+                    strokeLinecap="round"
+                  />
+                  <path
+                    d="M3 2L3 19.5L7.5 15L10.5 22L13.5 21L10.5 14H17L3 2Z"
+                    fill="#111827"
+                  />
+                </svg>
+
+                {/* File chip dragged by cursor */}
+                <div className="absolute top-5 left-3 bg-card border border-border rounded-lg shadow-md px-2.5 py-1.5 flex items-center gap-1.5 rotate-3 whitespace-nowrap">
+                  <FileText className="w-3 h-3 text-red-500 flex-shrink-0" />
+                  <span className="text-xs font-medium text-foreground">statement.pdf</span>
+                </div>
+              </div>
+            </div>
+
+            <p className="mt-8 text-sm text-muted-foreground">
+              Drag and drop your file to begin
+            </p>
+          </div>
+        )}
 
         {/* Processing phase */}
         {phase === "processing" && (
@@ -210,6 +351,49 @@ export default function SampleDocumentModal() {
                 </span>
               </div>
 
+              {/* Spending breakdown chart */}
+              <div className="rounded-2xl border border-border p-5 mb-6">
+                <h3 className="font-heading text-base font-semibold text-foreground mb-4 flex items-center gap-2">
+                  <BarChart2 className="w-4 h-4 text-indigo-500" />
+                  Monthly Spending Breakdown
+                </h3>
+                <ResponsiveContainer width="100%" height={200}>
+                  <BarChart
+                    data={SPENDING_CHART_DATA}
+                    margin={{ top: 0, right: 0, left: -20, bottom: 0 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.06)" vertical={false} />
+                    <XAxis
+                      dataKey="month"
+                      tick={{ fontSize: 11, fill: "#94a3b8" }}
+                      axisLine={false}
+                      tickLine={false}
+                    />
+                    <YAxis
+                      tick={{ fontSize: 10, fill: "#94a3b8" }}
+                      axisLine={false}
+                      tickLine={false}
+                      tickFormatter={(v) => `$${v}`}
+                    />
+                    <Tooltip
+                      contentStyle={{
+                        borderRadius: "12px",
+                        border: "1px solid #e2e8f0",
+                        backgroundColor: "#ffffff",
+                        fontSize: "12px",
+                        boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
+                      }}
+                      formatter={(value: number) => [`$${value}`, undefined]}
+                    />
+                    <Legend wrapperStyle={{ fontSize: "11px", paddingTop: "8px" }} />
+                    <Bar dataKey="Dining" stackId="a" fill="#f59e0b" />
+                    <Bar dataKey="Shopping" stackId="a" fill="#6366f1" />
+                    <Bar dataKey="Subscriptions" stackId="a" fill="#10b981" />
+                    <Bar dataKey="Other" stackId="a" fill="#94a3b8" radius={[4, 4, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+
               {/* Summary grid */}
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
                 <div className="p-4 rounded-2xl border border-border bg-card">
@@ -272,9 +456,7 @@ export default function SampleDocumentModal() {
                         key={i}
                         className="flex items-center justify-between py-2 border-b border-border/50 last:border-0"
                       >
-                        <span className="text-sm text-foreground">
-                          {fee.name}
-                        </span>
+                        <span className="text-sm text-foreground">{fee.name}</span>
                         <span className="text-sm font-medium text-amber-600 dark:text-amber-400">
                           ${fee.amount.toFixed(2)}
                         </span>
@@ -296,9 +478,7 @@ export default function SampleDocumentModal() {
                         className="flex items-center justify-between py-2 border-b border-border/50 last:border-0"
                       >
                         <div>
-                          <span className="text-sm text-foreground">
-                            {sub.name}
-                          </span>
+                          <span className="text-sm text-foreground">{sub.name}</span>
                           <span className="text-xs text-muted-foreground ml-2">
                             {sub.frequency}
                           </span>
@@ -343,9 +523,7 @@ export default function SampleDocumentModal() {
                         className="flex items-center justify-between py-2 border-b border-red-500/10 last:border-0"
                       >
                         <div>
-                          <p className="text-sm text-foreground">
-                            {item.description}
-                          </p>
+                          <p className="text-sm text-foreground">{item.description}</p>
                           <p className="text-xs text-muted-foreground">{item.date}</p>
                         </div>
                         <span className="text-sm font-medium text-red-500">

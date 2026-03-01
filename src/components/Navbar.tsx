@@ -43,7 +43,7 @@ export default async function Navbar() {
                 Account
               </Link>
               <ThemeSwitcher />
-              <UserProfile />
+              <UserProfile userName={user.user_metadata?.full_name ?? user.user_metadata?.name ?? ""} />
             </>
           ) : (
             <>

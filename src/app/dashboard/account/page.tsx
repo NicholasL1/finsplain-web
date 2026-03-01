@@ -17,7 +17,10 @@ export default async function AccountPage() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <AccountSettings userEmail={user.email || ""} />
+      <AccountSettings
+        userEmail={user.email || ""}
+        userFullName={user.user_metadata?.full_name ?? user.user_metadata?.name ?? ""}
+      />
     </div>
   );
 }

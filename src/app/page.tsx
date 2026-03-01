@@ -6,12 +6,19 @@ import FeatureShowcase from "@/src/components/FeatureShowcase";
 import PrivacyPrinciples from "@/src/components/PrivacyPrinciples";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { createClient } from "@/supabase/server";
 
-export default function Home() {
+export default async function Home() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  const firstName = (user?.user_metadata?.full_name ?? user?.user_metadata?.name ?? "")
+    .trim()
+    .split(" ")[0];
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      <Hero />
+      <Hero firstName={firstName || undefined} />
       <ProcessSteps />
       <FeatureShowcase />
 
