@@ -256,14 +256,14 @@ export default function HowItWorksDemo({ compact = false }: HowItWorksDemoProps)
                   top: "50%",
                   left: "50%",
                   transform: `translate(calc(-50% + ${cursorPos.x}px), calc(-50% + ${cursorPos.y}px))`,
-                  transition:
-                    dragStage === "flying"
-                      ? "transform 1.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)"
-                      : "none",
+                  transitionProperty:
+                    dragStage === "flying" ? "transform, opacity" : "none",
+                  transitionDuration: "1.3s",
+                  transitionTimingFunction:
+                    "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
                   zIndex: 20,
                   pointerEvents: "none",
                   opacity: dragStage === "dropped" ? 0 : 1,
-                  transitionProperty: "transform, opacity",
                 }}
               >
                 {/* Mac-style pointer cursor */}
