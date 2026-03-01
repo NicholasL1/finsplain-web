@@ -1,7 +1,7 @@
-"use client";
+"use client"
 
-import { useState, useEffect, useRef } from "react";
-import Link from "next/link";
+import { useState, useEffect, useRef } from "react"
+import Link from "next/link"
 import {
   Upload,
   FileText,
@@ -13,7 +13,7 @@ import {
   AlertTriangle,
   TrendingDown,
   ArrowRight,
-} from "lucide-react";
+} from "lucide-react"
 import {
   BarChart,
   Bar,
@@ -23,7 +23,7 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-} from "recharts";
+} from "recharts"
 
 const SAMPLE = {
   filename: "Sample_Bank_Statement_2024.pdf",
@@ -69,13 +69,13 @@ const SAMPLE = {
       date: "Mar 22, 2024",
     },
   ],
-};
+}
 
 const STEPS = [
   { label: "Uploading document", icon: Upload },
   { label: "Extracting transactions", icon: FileText },
   { label: "Generating insights", icon: BarChart2 },
-];
+]
 
 const SPENDING_CHART_DATA = [
   { month: "Oct", Dining: 420, Shopping: 280, Subscriptions: 162, Other: 190 },
@@ -84,93 +84,109 @@ const SPENDING_CHART_DATA = [
   { month: "Jan", Dining: 350, Shopping: 220, Subscriptions: 162, Other: 175 },
   { month: "Feb", Dining: 440, Shopping: 310, Subscriptions: 162, Other: 195 },
   { month: "Mar", Dining: 580, Shopping: 340, Subscriptions: 162, Other: 225 },
-];
+]
 
 interface HowItWorksDemoProps {
   /** Compact mode: shows chart + summary grid only in results (no detail lists). Use inside Hero. */
-  compact?: boolean;
+  compact?: boolean
 }
 
-export default function HowItWorksDemo({ compact = false }: HowItWorksDemoProps) {
-  const [phase, setPhase] = useState<"idle" | "drag" | "processing" | "results">("idle");
-  const [dragStage, setDragStage] = useState<"flying" | "hovering" | "dropped">("flying");
-  const [cursorPos, setCursorPos] = useState({ x: 160, y: -50 });
-  const [step, setStep] = useState(0);
-  const [browserExpanding, setBrowserExpanding] = useState(false);
-  const [resultsVisible, setResultsVisible] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const triggeredRef = useRef(false);
+export default function HowItWorksDemo({
+  compact = false,
+}: HowItWorksDemoProps) {
+  const [phase, setPhase] = useState<
+    "idle" | "drag" | "processing" | "results"
+  >("idle")
+  const [dragStage, setDragStage] = useState<"flying" | "hovering" | "dropped">(
+    "flying"
+  )
+  const [cursorPos, setCursorPos] = useState({ x: 160, y: -50 })
+  const [step, setStep] = useState(0)
+  const [browserExpanding, setBrowserExpanding] = useState(false)
+  const [resultsVisible, setResultsVisible] = useState(false)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const triggeredRef = useRef(false)
 
   const startAnimation = () => {
-    triggeredRef.current = true;
-    setDragStage("flying");
-    setCursorPos({ x: 160, y: -50 });
-    setStep(0);
-    setBrowserExpanding(false);
-    setResultsVisible(false);
-    setPhase("drag");
-  };
+    triggeredRef.current = true
+    setDragStage("flying")
+    setCursorPos({ x: 160, y: -50 })
+    setStep(0)
+    setBrowserExpanding(false)
+    setResultsVisible(false)
+    setPhase("drag")
+  }
 
   // IntersectionObserver: auto-play when scrolled into view, reset when fully out
   useEffect(() => {
-    const el = containerRef.current;
-    if (!el || typeof IntersectionObserver === "undefined") return;
+    const el = containerRef.current
+    if (!el || typeof IntersectionObserver === "undefined") return
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && !triggeredRef.current) {
-          startAnimation();
+          startAnimation()
         } else if (!entry.isIntersecting) {
-          triggeredRef.current = false;
-          setPhase("idle");
-          setDragStage("flying");
-          setCursorPos({ x: 160, y: -50 });
-          setStep(0);
-          setBrowserExpanding(false);
-          setResultsVisible(false);
+          triggeredRef.current = false
+          setPhase("idle")
+          setDragStage("flying")
+          setCursorPos({ x: 160, y: -50 })
+          setStep(0)
+          setBrowserExpanding(false)
+          setResultsVisible(false)
         }
       },
       { threshold: 0 }
-    );
+    )
 
-    observer.observe(el);
-    return () => observer.disconnect();
-     
-  }, []);
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
 
   // Drag phase: cursor flies in, hovers, drops, then advances to processing
   useEffect(() => {
-    if (phase !== "drag") return;
-    const t1 = setTimeout(() => setCursorPos({ x: 0, y: 0 }), 200);
-    const t2 = setTimeout(() => setDragStage("hovering"), 1600);
-    const t3 = setTimeout(() => setDragStage("dropped"), 2400);
-    const t4 = setTimeout(() => setPhase("processing"), 3200);
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); };
-  }, [phase]);
+    if (phase !== "drag") return
+    const t1 = setTimeout(() => setCursorPos({ x: 0, y: 0 }), 200)
+    const t2 = setTimeout(() => setDragStage("hovering"), 1600)
+    const t3 = setTimeout(() => setDragStage("dropped"), 2400)
+    const t4 = setTimeout(() => setPhase("processing"), 3200)
+    return () => {
+      clearTimeout(t1)
+      clearTimeout(t2)
+      clearTimeout(t3)
+      clearTimeout(t4)
+    }
+  }, [phase])
 
   // Processing phase: step through analysis steps, expand browser, then show results
   useEffect(() => {
-    if (phase !== "processing") return;
-    const t0 = setTimeout(() => setStep(0), 0);
-    const t1 = setTimeout(() => setStep(1), 1000);
-    const t2 = setTimeout(() => setStep(2), 2500);
-    const t3 = setTimeout(() => setBrowserExpanding(true), 3300); // begin smooth expansion
-    const t4 = setTimeout(() => setPhase("results"), 4000);
-    return () => { clearTimeout(t0); clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); };
-  }, [phase]);
+    if (phase !== "processing") return
+    const t0 = setTimeout(() => setStep(0), 0)
+    const t1 = setTimeout(() => setStep(1), 1000)
+    const t2 = setTimeout(() => setStep(2), 2500)
+    const t3 = setTimeout(() => setBrowserExpanding(true), 3300) // begin smooth expansion
+    const t4 = setTimeout(() => setPhase("results"), 4000)
+    return () => {
+      clearTimeout(t0)
+      clearTimeout(t1)
+      clearTimeout(t2)
+      clearTimeout(t3)
+      clearTimeout(t4)
+    }
+  }, [phase])
 
   // Fade in results content after the container has had time to expand
   useEffect(() => {
     if (phase !== "results") {
-      const t = setTimeout(() => setResultsVisible(false), 0);
-      return () => clearTimeout(t);
+      const t = setTimeout(() => setResultsVisible(false), 0)
+      return () => clearTimeout(t)
     }
-    const t = setTimeout(() => setResultsVisible(true), 100);
-    return () => clearTimeout(t);
-  }, [phase]);
+    const t = setTimeout(() => setResultsVisible(true), 100)
+    return () => clearTimeout(t)
+  }, [phase])
 
-  const isHovering = dragStage === "hovering" || dragStage === "dropped";
-  const isExpanded = browserExpanding || phase === "results";
+  const isHovering = dragStage === "hovering" || dragStage === "dropped"
+  const isExpanded = browserExpanding || phase === "results"
 
   return (
     <div
@@ -179,44 +195,44 @@ export default function HowItWorksDemo({ compact = false }: HowItWorksDemoProps)
         minHeight: isExpanded ? "700px" : "420px",
         transition: "min-height 0.9s cubic-bezier(0.4, 0, 0.2, 1)",
       }}
-      className="rounded-2xl border border-border bg-background shadow-[0_1px_3px_rgba(0,0,0,0.07)] overflow-hidden"
+      className="border-border bg-background overflow-hidden rounded-2xl border shadow-[0_1px_3px_rgba(0,0,0,0.07)]"
     >
       {/* Faux browser bar */}
-      <div className="bg-muted/60 border-b border-border px-4 py-2.5 flex items-center gap-3">
+      <div className="bg-muted/60 border-border flex items-center gap-3 border-b px-4 py-2.5">
         <div className="flex items-center gap-1.5">
-          <span className="w-3 h-3 rounded-full bg-red-400/60" />
-          <span className="w-3 h-3 rounded-full bg-amber-400/60" />
-          <span className="w-3 h-3 rounded-full bg-emerald-400/60" />
+          <span className="h-3 w-3 rounded-full bg-red-400/60" />
+          <span className="h-3 w-3 rounded-full bg-amber-400/60" />
+          <span className="h-3 w-3 rounded-full bg-emerald-400/60" />
         </div>
-        <div className="flex-1 bg-background/80 rounded-md px-3 py-1 text-xs text-muted-foreground/70 text-center max-w-xs mx-auto">
+        <div className="bg-background/80 text-muted-foreground/70 mx-auto max-w-xs flex-1 rounded-md px-3 py-1 text-center text-xs">
           finsplain.net/upload
         </div>
       </div>
 
       {/* Drag / idle phase */}
       {(phase === "idle" || phase === "drag") && (
-        <div className="flex flex-col items-center justify-center py-16 px-10 h-full">
-          <div className="w-full max-w-md relative">
+        <div className="flex h-full flex-col items-center justify-center px-10 py-16">
+          <div className="relative w-full max-w-md">
             {/* Drop zone */}
             <div
-              className={`relative rounded-2xl border-2 border-dashed transition-all duration-300 p-12 flex flex-col items-center text-center ${
+              className={`relative flex flex-col items-center rounded-2xl border-2 border-dashed p-12 text-center transition-all duration-300 ${
                 dragStage === "dropped"
                   ? "border-emerald-500 bg-emerald-500/5"
                   : isHovering
-                  ? "border-emerald-400 bg-emerald-500/5 scale-[1.02]"
-                  : "border-border bg-muted/30"
+                    ? "scale-[1.02] border-emerald-400 bg-emerald-500/5"
+                    : "border-border bg-muted/30"
               }`}
             >
               <div
-                className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-4 transition-all duration-300 ${
+                className={`mb-4 flex h-14 w-14 items-center justify-center rounded-2xl transition-all duration-300 ${
                   dragStage === "dropped" ? "bg-emerald-500/10" : "bg-muted"
                 }`}
               >
                 {dragStage === "dropped" ? (
-                  <Check className="w-7 h-7 text-emerald-500" />
+                  <Check className="h-7 w-7 text-emerald-500" />
                 ) : (
                   <Upload
-                    className={`w-7 h-7 transition-colors duration-300 ${
+                    className={`h-7 w-7 transition-colors duration-300 ${
                       isHovering ? "text-emerald-500" : "text-muted-foreground"
                     }`}
                   />
@@ -228,7 +244,9 @@ export default function HowItWorksDemo({ compact = false }: HowItWorksDemoProps)
                   <p className="text-sm font-medium text-emerald-600 dark:text-emerald-400">
                     File received!
                   </p>
-                  <p className="text-xs text-muted-foreground mt-1">{SAMPLE.filename}</p>
+                  <p className="text-muted-foreground mt-1 text-xs">
+                    {SAMPLE.filename}
+                  </p>
                 </>
               ) : (
                 <>
@@ -241,7 +259,7 @@ export default function HowItWorksDemo({ compact = false }: HowItWorksDemoProps)
                   >
                     {isHovering ? "Release to upload" : "Drop your file here"}
                   </p>
-                  <p className="text-xs text-muted-foreground mt-1">
+                  <p className="text-muted-foreground mt-1 text-xs">
                     PDF, CSV, Excel, or image
                   </p>
                 </>
@@ -289,15 +307,17 @@ export default function HowItWorksDemo({ compact = false }: HowItWorksDemoProps)
                 </svg>
 
                 {/* File chip dragged by cursor */}
-                <div className="absolute top-5 left-3 bg-card border border-border rounded-lg shadow-md px-2.5 py-1.5 flex items-center gap-1.5 rotate-3 whitespace-nowrap">
-                  <FileText className="w-3 h-3 text-red-500 flex-shrink-0" />
-                  <span className="text-xs font-medium text-foreground">statement.pdf</span>
+                <div className="bg-card border-border absolute top-5 left-3 flex rotate-3 items-center gap-1.5 rounded-lg border px-2.5 py-1.5 whitespace-nowrap shadow-md">
+                  <FileText className="h-3 w-3 flex-shrink-0 text-red-500" />
+                  <span className="text-foreground text-xs font-medium">
+                    statement.pdf
+                  </span>
                 </div>
               </div>
             )}
           </div>
 
-          <p className="mt-10 text-sm text-muted-foreground">
+          <p className="text-muted-foreground mt-10 text-sm">
             {phase === "idle"
               ? "Your financial documents, analyzed instantly"
               : "Drag and drop your file to begin"}
@@ -307,34 +327,34 @@ export default function HowItWorksDemo({ compact = false }: HowItWorksDemoProps)
 
       {/* Processing phase */}
       {phase === "processing" && (
-        <div className="flex flex-col items-center justify-center py-14 px-10 h-full">
+        <div className="flex h-full flex-col items-center justify-center px-10 py-14">
           <div className="w-full max-w-md">
             {STEPS.map((s, i) => {
-              const Icon = s.icon;
-              const isComplete = i < step;
-              const isActive = i === step;
+              const Icon = s.icon
+              const isComplete = i < step
+              const isActive = i === step
               return (
                 <div
                   key={i}
                   className={`flex items-center gap-4 py-4 ${
-                    i < STEPS.length - 1 ? "border-b border-border/50" : ""
+                    i < STEPS.length - 1 ? "border-border/50 border-b" : ""
                   }`}
                 >
                   <div
-                    className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                    className={`flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg ${
                       isComplete
                         ? "bg-emerald-500/10"
                         : isActive
-                        ? "bg-amber-500/10"
-                        : "bg-muted"
+                          ? "bg-amber-500/10"
+                          : "bg-muted"
                     }`}
                   >
                     {isComplete ? (
-                      <Check className="w-5 h-5 text-emerald-500" />
+                      <Check className="h-5 w-5 text-emerald-500" />
                     ) : isActive ? (
-                      <Loader2 className="w-5 h-5 text-amber-500 animate-spin" />
+                      <Loader2 className="h-5 w-5 animate-spin text-amber-500" />
                     ) : (
-                      <Icon className="w-5 h-5 text-muted-foreground" />
+                      <Icon className="text-muted-foreground h-5 w-5" />
                     )}
                   </div>
                   <span
@@ -342,8 +362,8 @@ export default function HowItWorksDemo({ compact = false }: HowItWorksDemoProps)
                       isComplete
                         ? "text-emerald-600 dark:text-emerald-400"
                         : isActive
-                        ? "text-foreground"
-                        : "text-muted-foreground"
+                          ? "text-foreground"
+                          : "text-muted-foreground"
                     }`}
                   >
                     {s.label}
@@ -351,17 +371,19 @@ export default function HowItWorksDemo({ compact = false }: HowItWorksDemoProps)
                   </span>
                   <span className="ml-auto text-sm">
                     {isComplete && (
-                      <span className="text-emerald-600 dark:text-emerald-400">Done</span>
+                      <span className="text-emerald-600 dark:text-emerald-400">
+                        Done
+                      </span>
                     )}
                     {isActive && (
                       <span className="text-muted-foreground">Working...</span>
                     )}
                   </span>
                 </div>
-              );
+              )
             })}
           </div>
-          <p className="mt-10 text-sm text-muted-foreground">
+          <p className="text-muted-foreground mt-10 text-sm">
             Analyzing {SAMPLE.filename}
           </p>
         </div>
@@ -376,8 +398,10 @@ export default function HowItWorksDemo({ compact = false }: HowItWorksDemoProps)
           }}
         >
           {/* Demo banner */}
-          <div className="bg-amber-500/10 border-b border-amber-500/30 px-5 py-2.5 flex items-center justify-between gap-3">
-            <p className={`text-amber-800 dark:text-amber-300 ${compact ? "text-xs" : "text-sm"}`}>
+          <div className="flex items-center justify-between gap-3 border-b border-amber-500/30 bg-amber-500/10 px-5 py-2.5">
+            <p
+              className={`text-amber-800 dark:text-amber-300 ${compact ? "text-xs" : "text-sm"}`}
+            >
               <span className="font-semibold">Sample data</span>
               {compact
                 ? " — sign up to analyze your own."
@@ -385,7 +409,7 @@ export default function HowItWorksDemo({ compact = false }: HowItWorksDemoProps)
             </p>
             <Link
               href="/sign-up"
-              className={`flex-shrink-0 font-semibold text-amber-800 dark:text-amber-300 underline underline-offset-2 hover:no-underline whitespace-nowrap ${compact ? "text-xs" : "text-sm"}`}
+              className={`flex-shrink-0 font-semibold whitespace-nowrap text-amber-800 underline underline-offset-2 hover:no-underline dark:text-amber-300 ${compact ? "text-xs" : "text-sm"}`}
             >
               Get started →
             </Link>
@@ -393,24 +417,28 @@ export default function HowItWorksDemo({ compact = false }: HowItWorksDemoProps)
 
           <div className={compact ? "p-5" : "p-6"}>
             {/* Document header */}
-            <div className="flex items-start gap-3 mb-5">
-              <div className="flex-1 min-w-0">
-                <h3 className={`font-heading font-bold text-foreground truncate ${compact ? "text-base" : "text-lg"}`}>
+            <div className="mb-5 flex items-start gap-3">
+              <div className="min-w-0 flex-1">
+                <h3
+                  className={`font-heading text-foreground truncate font-bold ${compact ? "text-base" : "text-lg"}`}
+                >
                   {SAMPLE.filename}
                 </h3>
-                <p className="text-xs text-muted-foreground mt-0.5">
+                <p className="text-muted-foreground mt-0.5 text-xs">
                   Uploaded {SAMPLE.date}
                 </p>
               </div>
-              <span className="flex-shrink-0 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+              <span className="inline-flex flex-shrink-0 items-center rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-xs font-medium text-emerald-600 dark:text-emerald-400">
                 Complete
               </span>
             </div>
 
             {/* Spending breakdown chart */}
-            <div className={`rounded-2xl border border-border mb-5 ${compact ? "p-4" : "p-5"}`}>
-              <h3 className="font-heading text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-                <BarChart2 className="w-4 h-4 text-indigo-500" />
+            <div
+              className={`border-border mb-5 rounded-2xl border ${compact ? "p-4" : "p-5"}`}
+            >
+              <h3 className="font-heading text-foreground mb-3 flex items-center gap-2 text-sm font-semibold">
+                <BarChart2 className="h-4 w-4 text-indigo-500" />
                 Monthly Spending Breakdown
               </h3>
               <ResponsiveContainer width="100%" height={compact ? 200 : 220}>
@@ -445,71 +473,90 @@ export default function HowItWorksDemo({ compact = false }: HowItWorksDemoProps)
                     }}
                     formatter={(value: number) => [`$${value}`, undefined]}
                   />
-                  <Legend wrapperStyle={{ fontSize: "11px", paddingTop: "8px" }} />
+                  <Legend
+                    wrapperStyle={{ fontSize: "11px", paddingTop: "8px" }}
+                  />
                   <Bar dataKey="Dining" stackId="a" fill="#f59e0b" />
                   <Bar dataKey="Shopping" stackId="a" fill="#6366f1" />
                   <Bar dataKey="Subscriptions" stackId="a" fill="#10b981" />
-                  <Bar dataKey="Other" stackId="a" fill="#94a3b8" radius={[4, 4, 0, 0]} />
+                  <Bar
+                    dataKey="Other"
+                    stackId="a"
+                    fill="#94a3b8"
+                    radius={[4, 4, 0, 0]}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </div>
 
             {/* Summary grid */}
-            <div className={`grid grid-cols-2 gap-3 ${compact ? "mb-5" : "lg:grid-cols-4 gap-3 mb-6"}`}>
-              <div className="p-3.5 rounded-2xl border border-border bg-card">
-                <div className="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center mb-2">
-                  <DollarSign className="w-4 h-4 text-amber-500" />
+            <div
+              className={`grid grid-cols-2 gap-3 ${compact ? "mb-5" : "mb-6 gap-3 lg:grid-cols-4"}`}
+            >
+              <div className="border-border bg-card rounded-2xl border p-3.5">
+                <div className="mb-2 flex h-8 w-8 items-center justify-center rounded-lg bg-amber-500/10">
+                  <DollarSign className="h-4 w-4 text-amber-500" />
                 </div>
-                <div className="font-heading text-xl font-bold text-foreground">
+                <div className="font-heading text-foreground text-xl font-bold">
                   ${SAMPLE.summary.totalFees.toFixed(2)}
                 </div>
-                <div className="text-xs text-muted-foreground mt-0.5">Total Fees Found</div>
-              </div>
-              <div className="p-3.5 rounded-2xl border border-border bg-card">
-                <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center mb-2">
-                  <RefreshCw className="w-4 h-4 text-emerald-500" />
+                <div className="text-muted-foreground mt-0.5 text-xs">
+                  Total Fees Found
                 </div>
-                <div className="font-heading text-xl font-bold text-foreground">
+              </div>
+              <div className="border-border bg-card rounded-2xl border p-3.5">
+                <div className="mb-2 flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500/10">
+                  <RefreshCw className="h-4 w-4 text-emerald-500" />
+                </div>
+                <div className="font-heading text-foreground text-xl font-bold">
                   {SAMPLE.summary.subscriptions}
                 </div>
-                <div className="text-xs text-muted-foreground mt-0.5">Subscriptions</div>
-              </div>
-              <div className="p-3.5 rounded-2xl border border-border bg-card">
-                <div className="w-8 h-8 rounded-lg bg-red-500/10 flex items-center justify-center mb-2">
-                  <AlertTriangle className="w-4 h-4 text-red-500" />
+                <div className="text-muted-foreground mt-0.5 text-xs">
+                  Subscriptions
                 </div>
-                <div className="font-heading text-xl font-bold text-foreground">
+              </div>
+              <div className="border-border bg-card rounded-2xl border p-3.5">
+                <div className="mb-2 flex h-8 w-8 items-center justify-center rounded-lg bg-red-500/10">
+                  <AlertTriangle className="h-4 w-4 text-red-500" />
+                </div>
+                <div className="font-heading text-foreground text-xl font-bold">
                   {SAMPLE.summary.unusual}
                 </div>
-                <div className="text-xs text-muted-foreground mt-0.5">Unusual Activities</div>
-              </div>
-              <div className="p-3.5 rounded-2xl border border-border bg-card">
-                <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center mb-2">
-                  <TrendingDown className="w-4 h-4 text-emerald-500" />
+                <div className="text-muted-foreground mt-0.5 text-xs">
+                  Unusual Activities
                 </div>
-                <div className="font-heading text-xl font-bold text-foreground">
+              </div>
+              <div className="border-border bg-card rounded-2xl border p-3.5">
+                <div className="mb-2 flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500/10">
+                  <TrendingDown className="h-4 w-4 text-emerald-500" />
+                </div>
+                <div className="font-heading text-foreground text-xl font-bold">
                   ${SAMPLE.summary.savings.toFixed(2)}
                 </div>
-                <div className="text-xs text-muted-foreground mt-0.5">Potential Savings</div>
+                <div className="text-muted-foreground mt-0.5 text-xs">
+                  Potential Savings
+                </div>
               </div>
             </div>
 
             {/* Detailed sections — full mode only */}
             {!compact && (
-              <div className="grid lg:grid-cols-2 gap-4">
+              <div className="grid gap-4 lg:grid-cols-2">
                 {/* Fees */}
-                <div className="rounded-2xl border border-border p-5">
-                  <h3 className="font-heading text-base font-semibold text-foreground mb-3 flex items-center gap-2">
-                    <DollarSign className="w-4 h-4 text-amber-500" />
+                <div className="border-border rounded-2xl border p-5">
+                  <h3 className="font-heading text-foreground mb-3 flex items-center gap-2 text-base font-semibold">
+                    <DollarSign className="h-4 w-4 text-amber-500" />
                     Fees Identified
                   </h3>
                   <div className="space-y-1">
                     {SAMPLE.fees.map((fee, i) => (
                       <div
                         key={i}
-                        className="flex items-center justify-between py-2 border-b border-border/50 last:border-0"
+                        className="border-border/50 flex items-center justify-between border-b py-2 last:border-0"
                       >
-                        <span className="text-sm text-foreground">{fee.name}</span>
+                        <span className="text-foreground text-sm">
+                          {fee.name}
+                        </span>
                         <span className="text-sm font-medium text-amber-600 dark:text-amber-400">
                           ${fee.amount.toFixed(2)}
                         </span>
@@ -519,24 +566,26 @@ export default function HowItWorksDemo({ compact = false }: HowItWorksDemoProps)
                 </div>
 
                 {/* Subscriptions */}
-                <div className="rounded-2xl border border-border p-5">
-                  <h3 className="font-heading text-base font-semibold text-foreground mb-3 flex items-center gap-2">
-                    <RefreshCw className="w-4 h-4 text-emerald-500" />
+                <div className="border-border rounded-2xl border p-5">
+                  <h3 className="font-heading text-foreground mb-3 flex items-center gap-2 text-base font-semibold">
+                    <RefreshCw className="h-4 w-4 text-emerald-500" />
                     Active Subscriptions
                   </h3>
                   <div className="space-y-1">
                     {SAMPLE.subscriptions.map((sub, i) => (
                       <div
                         key={i}
-                        className="flex items-center justify-between py-2 border-b border-border/50 last:border-0"
+                        className="border-border/50 flex items-center justify-between border-b py-2 last:border-0"
                       >
                         <div>
-                          <span className="text-sm text-foreground">{sub.name}</span>
-                          <span className="text-xs text-muted-foreground ml-2">
+                          <span className="text-foreground text-sm">
+                            {sub.name}
+                          </span>
+                          <span className="text-muted-foreground ml-2 text-xs">
                             {sub.frequency}
                           </span>
                         </div>
-                        <span className="text-sm font-medium text-foreground">
+                        <span className="text-foreground text-sm font-medium">
                           ${sub.amount.toFixed(2)}
                         </span>
                       </div>
@@ -545,18 +594,18 @@ export default function HowItWorksDemo({ compact = false }: HowItWorksDemoProps)
                 </div>
 
                 {/* Spending Patterns */}
-                <div className="rounded-2xl border border-border p-5">
-                  <h3 className="font-heading text-base font-semibold text-foreground mb-3 flex items-center gap-2">
-                    <TrendingDown className="w-4 h-4 text-indigo-500" />
+                <div className="border-border rounded-2xl border p-5">
+                  <h3 className="font-heading text-foreground mb-3 flex items-center gap-2 text-base font-semibold">
+                    <TrendingDown className="h-4 w-4 text-indigo-500" />
                     Spending Patterns
                   </h3>
                   <ul className="space-y-3">
                     {SAMPLE.patterns.map((pattern, i) => (
                       <li
                         key={i}
-                        className="flex items-start gap-3 text-sm text-muted-foreground"
+                        className="text-muted-foreground flex items-start gap-3 text-sm"
                       >
-                        <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 mt-1.5 flex-shrink-0" />
+                        <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-indigo-500" />
                         {pattern}
                       </li>
                     ))}
@@ -565,19 +614,23 @@ export default function HowItWorksDemo({ compact = false }: HowItWorksDemoProps)
 
                 {/* Unusual Activity */}
                 <div className="rounded-2xl border border-red-500/20 bg-red-500/5 p-5">
-                  <h3 className="font-heading text-base font-semibold text-foreground mb-3 flex items-center gap-2">
-                    <AlertTriangle className="w-4 h-4 text-red-500" />
+                  <h3 className="font-heading text-foreground mb-3 flex items-center gap-2 text-base font-semibold">
+                    <AlertTriangle className="h-4 w-4 text-red-500" />
                     Unusual Activity
                   </h3>
                   <div className="space-y-1">
                     {SAMPLE.unusual.map((item, i) => (
                       <div
                         key={i}
-                        className="flex items-center justify-between py-2 border-b border-red-500/10 last:border-0"
+                        className="flex items-center justify-between border-b border-red-500/10 py-2 last:border-0"
                       >
                         <div>
-                          <p className="text-sm text-foreground">{item.description}</p>
-                          <p className="text-xs text-muted-foreground">{item.date}</p>
+                          <p className="text-foreground text-sm">
+                            {item.description}
+                          </p>
+                          <p className="text-muted-foreground text-xs">
+                            {item.date}
+                          </p>
                         </div>
                         <span className="text-sm font-medium text-red-500">
                           ${item.amount.toFixed(2)}
@@ -590,27 +643,31 @@ export default function HowItWorksDemo({ compact = false }: HowItWorksDemoProps)
             )}
 
             {/* CTA */}
-            <div className={`border-t border-border text-center ${compact ? "mt-5 pt-5" : "mt-8 pt-6"}`}>
+            <div
+              className={`border-border border-t text-center ${compact ? "mt-5 pt-5" : "mt-8 pt-6"}`}
+            >
               {!compact && (
-                <p className="text-sm text-muted-foreground mb-4">
+                <p className="text-muted-foreground mb-4 text-sm">
                   Ready to analyze your own financial documents?
                 </p>
               )}
               <Link
                 href="/sign-up"
-                className={`inline-flex items-center text-white bg-emerald-500 rounded-xl hover:bg-emerald-600 transition-all duration-150 font-medium active:scale-[0.98] ${
+                className={`inline-flex items-center rounded-xl bg-emerald-500 font-medium text-white transition-all duration-150 hover:bg-emerald-600 active:scale-[0.98] ${
                   compact ? "px-5 py-2.5 text-sm" : "px-7 py-3 text-base"
                 }`}
               >
                 Get Started Free
-                <ArrowRight className="ml-2 w-4 h-4" />
+                <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
               {!compact && (
-                <p className="text-xs text-muted-foreground mt-3">No credit card required</p>
+                <p className="text-muted-foreground mt-3 text-xs">
+                  No credit card required
+                </p>
               )}
               <button
                 onClick={startAnimation}
-                className="mt-3 text-xs text-muted-foreground hover:text-foreground transition-colors block mx-auto"
+                className="text-muted-foreground hover:text-foreground mx-auto mt-3 block text-xs transition-colors"
               >
                 ↺ Watch again
               </button>
@@ -619,5 +676,5 @@ export default function HowItWorksDemo({ compact = false }: HowItWorksDemoProps)
         </div>
       )}
     </div>
-  );
+  )
 }
