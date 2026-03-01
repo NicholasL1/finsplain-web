@@ -44,4 +44,4 @@ next-env.d.ts
 # local env files
 .env.local
 /.vscode/*
-
+!/.vscode/settings.json

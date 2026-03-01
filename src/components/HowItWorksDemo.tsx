@@ -151,17 +151,20 @@ export default function HowItWorksDemo({ compact = false }: HowItWorksDemoProps)
   // Processing phase: step through analysis steps, expand browser, then show results
   useEffect(() => {
     if (phase !== "processing") return;
-    setStep(0);
+    const t0 = setTimeout(() => setStep(0), 0);
     const t1 = setTimeout(() => setStep(1), 1000);
     const t2 = setTimeout(() => setStep(2), 2500);
     const t3 = setTimeout(() => setBrowserExpanding(true), 3300); // begin smooth expansion
     const t4 = setTimeout(() => setPhase("results"), 4000);
-    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); };
+    return () => { clearTimeout(t0); clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); clearTimeout(t4); };
   }, [phase]);
 
   // Fade in results content after the container has had time to expand
   useEffect(() => {
-    if (phase !== "results") { setResultsVisible(false); return; }
+    if (phase !== "results") {
+      const t = setTimeout(() => setResultsVisible(false), 0);
+      return () => clearTimeout(t);
+    }
     const t = setTimeout(() => setResultsVisible(true), 100);
     return () => clearTimeout(t);
   }, [phase]);
