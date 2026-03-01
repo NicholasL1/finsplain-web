@@ -4,6 +4,7 @@ import MobileNav from "@/src/components/MobileNav";
 import UserProfile from "@/src/components/UserProfile";
 import { createClient } from "@/supabase/server";
 import { ThemeSwitcher } from "@/src/components/ThemeSwitcher";
+import Logo from "@/src/components/Logo";
 
 export default async function Navbar() {
   const supabase = await createClient();
@@ -15,15 +16,19 @@ export default async function Navbar() {
         <Link
           href="/"
           prefetch
-          className="text-xl font-heading font-bold tracking-tight text-foreground"
+          className="flex items-center gap-2.5"
         >
-          Fin<span className="text-emerald-500">Splain</span>
+          <Logo size={28} />
+          <span className="text-xl font-heading font-bold tracking-tight text-foreground">
+            Fin<span className="text-emerald-500">Splain</span>
+          </span>
         </Link>
 
         {/* Desktop nav */}
         <div className="hidden sm:flex gap-1 items-center">
           {user ? (
             <>
+              <ThemeSwitcher />
               <Link
                 href="/dashboard/upload"
                 className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
@@ -42,7 +47,6 @@ export default async function Navbar() {
               >
                 Account
               </Link>
-              <ThemeSwitcher />
               <UserProfile userName={user.user_metadata?.full_name ?? user.user_metadata?.name ?? ""} />
             </>
           ) : (

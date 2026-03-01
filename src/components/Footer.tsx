@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Logo from "@/src/components/Logo";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -10,9 +11,12 @@ export default function Footer() {
           <div>
             <Link
               href="/"
-              className="text-lg font-heading font-bold text-foreground mb-4 inline-block"
+              className="flex items-center gap-2 mb-4"
             >
-              Fin<span className="text-emerald-500">Splain</span>
+              <Logo size={22} />
+              <span className="text-lg font-heading font-bold text-foreground">
+                Fin<span className="text-emerald-500">Splain</span>
+              </span>
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed">
               Transform complex financial documents into clear, actionable
