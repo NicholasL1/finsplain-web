@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Check, X } from "lucide-react";
 import Link from "next/link";
 import { PasswordInput } from "@/src/components/PasswordInput";
@@ -32,11 +32,9 @@ function getStrengthChecks(password: string) {
 export function SignUpForm({ message }: { message?: Message }) {
   const [password, setPassword] = useState("");
   const [showStrength, setShowStrength] = useState(false);
-  const [siteUrl, setSiteUrl] = useState("");
-
-  useEffect(() => {
-    setSiteUrl(window.location.origin);
-  }, []);
+  const [siteUrl] = useState(() =>
+    typeof window !== "undefined" ? window.location.origin : ""
+  );
 
   const checks = getStrengthChecks(password);
   const passwordValid = Object.values(checks).every(Boolean);
