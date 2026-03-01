@@ -4,7 +4,6 @@ import Navbar from "@/src/components/Navbar";
 import ProcessSteps from "@/src/components/ProcessSteps";
 import FeatureShowcase from "@/src/components/FeatureShowcase";
 import PrivacyPrinciples from "@/src/components/PrivacyPrinciples";
-import HowItWorksDemo from "@/src/components/HowItWorksDemo";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { createClient } from "@/supabase/server";
@@ -21,28 +20,7 @@ export default async function Home() {
       <Navbar />
       <Hero firstName={firstName || undefined} />
 
-      {/* How It Works — inline animated demo */}
-      <section id="how-it-works" className="py-16 sm:py-20 bg-muted/30">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-10">
-            <h2 className="font-heading text-3xl sm:text-4xl font-bold text-foreground mb-3">
-              See it in action
-            </h2>
-            <p className="text-muted-foreground text-base max-w-xl mx-auto">
-              Watch Finsplain analyze a sample bank statement and uncover hidden
-              fees, subscriptions, and spending patterns.
-            </p>
-          </div>
-          <div className="max-w-4xl mx-auto">
-            <HowItWorksDemo />
-          </div>
-        </div>
-      </section>
-
-      <ProcessSteps />
-      <FeatureShowcase />
-
-      {/* Trust/Stats Section */}
+      {/* Trust/Stats Section — immediately below hero */}
       <section className="py-16 bg-muted">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center max-w-4xl mx-auto">
@@ -80,6 +58,8 @@ export default async function Home() {
         </div>
       </section>
 
+      <ProcessSteps />
+      <FeatureShowcase />
       <PrivacyPrinciples />
 
       {/* CTA Section */}

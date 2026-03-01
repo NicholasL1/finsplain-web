@@ -12,6 +12,7 @@ export default function Logo({ size = 32, className = "" }: LogoProps) {
       viewBox="265 155 465 480"
       width={size}
       height={size}
+      role="img"
       aria-label="FinSplain logo"
       className={className}
     >
