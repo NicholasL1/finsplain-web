@@ -1,6 +1,5 @@
 import React, { useActionState } from "react";
 import { render, screen } from "../test-utils";
-import userEvent from "@testing-library/user-event";
 import { SignInForm } from "@/src/components/SignInForm";
 
 // Server actions are not executed in JSDOM — mock the module

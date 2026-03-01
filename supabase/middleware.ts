@@ -19,7 +19,7 @@ export const createClient = async (request: NextRequest) => {
           return request.cookies.getAll();
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) =>
+          cookiesToSet.forEach(({ name, value }) =>
             request.cookies.set(name, value),
           );
           supabaseResponse = NextResponse.next({
@@ -32,10 +32,7 @@ export const createClient = async (request: NextRequest) => {
       },
     });
 
-    const {
-      data: { user },
-      error,
-    } = await supabase.auth.getUser();
+    const { error } = await supabase.auth.getUser();
 
     // Protect dashboard routes
     if (request.nextUrl.pathname.startsWith("/dashboard") && error) {
@@ -43,7 +40,7 @@ export const createClient = async (request: NextRequest) => {
     }
 
     return supabaseResponse;
-  } catch (e) {
+  } catch {
     return NextResponse.next({
       request: {
         headers: request.headers,

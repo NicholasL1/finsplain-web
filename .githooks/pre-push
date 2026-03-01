@@ -1,0 +1,12 @@
+#!/bin/sh
+# Runs before every `git push`. Aborts the push if tests or lint fail.
+
+set -e
+
+echo "▶ Running test suite..."
+npm test -- --no-coverage
+
+echo "▶ Running linter..."
+npm run lint
+
+echo "✓ All checks passed."
