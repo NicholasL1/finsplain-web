@@ -16,7 +16,7 @@ export default async function Navbar() {
         <Link
           href="/"
           prefetch
-          className="flex items-center gap-2.5"
+          className="flex items-center gap-2.5 hover:opacity-90 transition-opacity duration-150"
         >
           <Logo size={28} />
           <span className="text-xl font-heading font-bold tracking-tight text-foreground">

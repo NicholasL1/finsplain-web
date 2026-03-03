@@ -65,9 +65,12 @@ export default async function DocumentDetailPage({ params }: PageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="relative min-h-screen bg-background overflow-hidden">
+      {/* Ambient background */}
+      <div className="absolute inset-0 bg-linear-to-br from-emerald-500/12 via-transparent to-indigo-500/8 dark:from-emerald-500/6 dark:to-indigo-500/4 pointer-events-none" aria-hidden="true" />
+      <div className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full bg-emerald-500/8 blur-3xl pointer-events-none" aria-hidden="true" />
       <Navbar />
-      <main className="container mx-auto px-4 py-8 sm:py-12">
+      <main className="relative container mx-auto px-4 py-8 sm:py-12">
         {/* Back nav */}
         <Link
           href="/dashboard"
@@ -78,7 +81,7 @@ export default async function DocumentDetailPage({ params }: PageProps) {
         </Link>
 
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-6 mb-6 border-b border-border/50">
           <div>
             <div className="flex items-center gap-3 mb-1">
               <h1 className="font-heading text-2xl font-bold text-foreground">
@@ -136,7 +139,7 @@ export default async function DocumentDetailPage({ params }: PageProps) {
           <>
             {/* Summary Cards */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-              <div className="p-5 rounded-2xl border border-border bg-card">
+              <div className="p-5 rounded-2xl border border-border border-t-2 border-t-amber-500/50 bg-card">
                 <div className="w-9 h-9 rounded-lg bg-amber-500/10 flex items-center justify-center mb-3">
                   <DollarSign className="w-4.5 h-4.5 text-amber-500" />
                 </div>
@@ -147,7 +150,7 @@ export default async function DocumentDetailPage({ params }: PageProps) {
                   Total Fees Found
                 </div>
               </div>
-              <div className="p-5 rounded-2xl border border-border bg-card">
+              <div className="p-5 rounded-2xl border border-border border-t-2 border-t-emerald-500/50 bg-card">
                 <div className="w-9 h-9 rounded-lg bg-emerald-500/10 flex items-center justify-center mb-3">
                   <RefreshCw className="w-4.5 h-4.5 text-emerald-500" />
                 </div>
@@ -158,7 +161,7 @@ export default async function DocumentDetailPage({ params }: PageProps) {
                   Subscriptions
                 </div>
               </div>
-              <div className="p-5 rounded-2xl border border-border bg-card">
+              <div className="p-5 rounded-2xl border border-border border-t-2 border-t-red-500/50 bg-card">
                 <div className="w-9 h-9 rounded-lg bg-red-500/10 flex items-center justify-center mb-3">
                   <AlertTriangle className="w-4.5 h-4.5 text-red-500" />
                 </div>
@@ -169,7 +172,7 @@ export default async function DocumentDetailPage({ params }: PageProps) {
                   Unusual Activities
                 </div>
               </div>
-              <div className="p-5 rounded-2xl border border-border bg-card">
+              <div className="p-5 rounded-2xl border border-border border-t-2 border-t-emerald-500/50 bg-card">
                 <div className="w-9 h-9 rounded-lg bg-emerald-500/10 flex items-center justify-center mb-3">
                   <TrendingDown className="w-4.5 h-4.5 text-emerald-500" />
                 </div>

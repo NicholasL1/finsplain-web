@@ -24,11 +24,14 @@ export default async function Dashboard() {
     .order("created_at", { ascending: false });
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="relative min-h-screen bg-background overflow-hidden">
+      {/* Ambient background */}
+      <div className="absolute inset-0 bg-linear-to-br from-emerald-500/12 via-transparent to-indigo-500/8 dark:from-emerald-500/6 dark:to-indigo-500/4 pointer-events-none" aria-hidden="true" />
+      <div className="absolute -top-40 -right-40 w-[500px] h-[500px] rounded-full bg-emerald-500/15 dark:bg-emerald-500/8 blur-3xl pointer-events-none" aria-hidden="true" />
       <Navbar />
-      <main className="container mx-auto px-4 py-8 sm:py-12">
+      <main className="relative container mx-auto px-4 py-8 sm:py-12">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center justify-between pb-6 mb-6 border-b border-border/50">
           <div>
             <h1 className="font-heading text-2xl sm:text-3xl font-bold text-foreground">
               Documents

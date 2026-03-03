@@ -400,7 +400,7 @@ export default function UploadCard() {
           "rounded-2xl border-2 border-dashed p-10 sm:p-12 text-center transition-all duration-200",
           isDragging
             ? "border-emerald-500 bg-emerald-500/5"
-            : "border-border bg-background hover:border-emerald-300 hover:bg-muted/50"
+            : "border-border bg-muted/30 dark:bg-background/50 hover:border-emerald-400 hover:bg-emerald-500/5"
         )}
       >
         <input
@@ -411,8 +411,8 @@ export default function UploadCard() {
           onChange={handleFileChange}
         />
 
-        <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-muted">
-          <Upload className="h-6 w-6 text-muted-foreground" />
+        <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-500/10">
+          <Upload className="h-6 w-6 text-emerald-500" />
         </div>
 
         <h2 className="font-heading text-xl font-semibold text-foreground mb-2">

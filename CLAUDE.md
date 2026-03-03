@@ -18,6 +18,7 @@ npm run lint         # Run ESLint
 ### Routing & Pages
 
 File-based routing under `app/`. Current routes:
+
 - `/` — Home
 - `/how-it-works`, `/privacy` — Info pages
 - `/login`, `/signup` — Auth pages
@@ -43,3 +44,11 @@ Authentication is currently a placeholder (`isAuthenticated = false` hardcoded i
 ### Path Aliases
 
 `@/*` maps to the project root (configured in `tsconfig.json`).
+
+### After every change
+
+Make sure to run all tests, make sure all existing tests pass, and update test suites to reflect recent changes.
+
+- We test for business logic and real user use cases, not coverage
+- If a feature implementation breaks a use case, if it wasn't intentional, we need to refactor this feature
+- Make sure to run the linter and fix any linting issues

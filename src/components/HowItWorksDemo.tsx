@@ -89,10 +89,16 @@ const SPENDING_CHART_DATA = [
 interface HowItWorksDemoProps {
   /** Compact mode: shows chart + summary grid only in results (no detail lists). Use inside Hero. */
   compact?: boolean
+  /** Called when the browser window starts expanding (results incoming). Use to reveal sibling content. */
+  onExpanded?: () => void
+  /** Called when the demo resets (e.g. scrolled out of view). Use to hide sibling content again. */
+  onReset?: () => void
 }
 
 export default function HowItWorksDemo({
   compact = false,
+  onExpanded,
+  onReset,
 }: HowItWorksDemoProps) {
   const [phase, setPhase] = useState<
     "idle" | "drag" | "processing" | "results"
@@ -106,6 +112,10 @@ export default function HowItWorksDemo({
   const [resultsVisible, setResultsVisible] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   const triggeredRef = useRef(false)
+  const onExpandedRef = useRef(onExpanded)
+  const onResetRef = useRef(onReset)
+  useEffect(() => { onExpandedRef.current = onExpanded }, [onExpanded])
+  useEffect(() => { onResetRef.current = onReset }, [onReset])
 
   const startAnimation = () => {
     triggeredRef.current = true
@@ -114,6 +124,7 @@ export default function HowItWorksDemo({
     setStep(0)
     setBrowserExpanding(false)
     setResultsVisible(false)
+    onResetRef.current?.()
     setPhase("drag")
   }
 
@@ -134,6 +145,7 @@ export default function HowItWorksDemo({
           setStep(0)
           setBrowserExpanding(false)
           setResultsVisible(false)
+          onResetRef.current?.()
         }
       },
       { threshold: 0 }
@@ -164,7 +176,7 @@ export default function HowItWorksDemo({
     const t0 = setTimeout(() => setStep(0), 0)
     const t1 = setTimeout(() => setStep(1), 1000)
     const t2 = setTimeout(() => setStep(2), 2500)
-    const t3 = setTimeout(() => setBrowserExpanding(true), 3300) // begin smooth expansion
+    const t3 = setTimeout(() => { setBrowserExpanding(true); onExpandedRef.current?.() }, 3300) // begin smooth expansion
     const t4 = setTimeout(() => setPhase("results"), 4000)
     return () => {
       clearTimeout(t0)
