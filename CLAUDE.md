@@ -45,10 +45,26 @@ Authentication is currently a placeholder (`isAuthenticated = false` hardcoded i
 
 `@/*` maps to the project root (configured in `tsconfig.json`).
 
-### After every change
+## Operating Rules
 
-Make sure to run all tests, make sure all existing tests pass, and update test suites to reflect recent changes.
+- Always review this entire CLAUDE.md file before making changes.
+- Follow architectural patterns described here.
+- Do not introduce patterns that conflict with this document.
+- If a change conflicts with these rules, explain why before proceeding.
 
-- We test for business logic and real user use cases, not coverage
-- If a feature implementation breaks a use case, if it wasn't intentional, we need to refactor this feature
-- Make sure to run the linter and fix any linting issues
+## Mandatory After Every Change
+
+You must:
+
+1. Run all tests
+2. Ensure all existing tests pass
+3. Update tests to reflect intentional changes
+4. Run the linter
+5. Fix all linting issues
+6. Confirm no business use cases were broken
+
+## Additional Context Files
+
+Claude must also read:
+
+- docs/ARCHITECTURE.md
