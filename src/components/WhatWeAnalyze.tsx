@@ -41,7 +41,7 @@ const items = [
 
 export default function WhatWeAnalyze() {
   return (
-    <section className="py-20 sm:py-24 bg-linear-to-b from-background via-muted to-background dark:via-muted/55 relative overflow-hidden">
+    <section className="py-20 sm:py-24 relative">
       <div
         className="absolute inset-0 bg-radial from-emerald-500/4 via-transparent to-transparent pointer-events-none"
         aria-hidden="true"
