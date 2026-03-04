@@ -69,8 +69,8 @@ export default function DocumentList({ documents }: DocumentListProps) {
           className="group flex items-center justify-between p-5 rounded-2xl border border-border bg-card hover:-translate-y-0.5 hover:shadow-[0_2px_8px_rgba(0,0,0,0.06)] transition-all duration-150"
         >
           <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded-xl bg-muted flex items-center justify-center">
-              <FileText className="w-5 h-5 text-muted-foreground" />
+            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center">
+              <FileText className="w-5 h-5 text-emerald-500" />
             </div>
             <div>
               <div className="flex items-center gap-3">

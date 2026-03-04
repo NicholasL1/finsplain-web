@@ -78,7 +78,7 @@ export default function AccountSettings({ userEmail, userFullName }: AccountSett
       </h1>
 
       {/* Profile Section */}
-      <div className="rounded-2xl border border-border p-6 mb-6">
+      <div className="rounded-2xl border border-border border-t-2 border-t-emerald-500/40 p-6 mb-6">
         {/* Avatar + identity */}
         <div className="flex flex-col items-center text-center mb-6">
           <div className="w-16 h-16 rounded-full bg-emerald-500 flex items-center justify-center mb-3 select-none">
@@ -149,7 +149,7 @@ export default function AccountSettings({ userEmail, userFullName }: AccountSett
       </div>
 
       {/* Appearance Section */}
-      <div className="rounded-2xl border border-border p-6 mb-6">
+      <div className="rounded-2xl border border-border border-t-2 border-t-indigo-500/30 p-6 mb-6">
         <h2 className="font-heading text-lg font-semibold text-foreground mb-1">
           Appearance
         </h2>
@@ -182,7 +182,7 @@ export default function AccountSettings({ userEmail, userFullName }: AccountSett
       </div>
 
       {/* Session */}
-      <div className="rounded-2xl border border-border p-6">
+      <div className="rounded-2xl border border-border border-t-2 border-t-red-500/20 p-6">
         <h2 className="font-heading text-lg font-semibold text-foreground mb-2">
           Session
         </h2>

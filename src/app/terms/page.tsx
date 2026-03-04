@@ -1,22 +1,18 @@
 import Navbar from "@/src/components/Navbar"
 import Footer from "@/src/components/Footer"
 import Link from "next/link"
+import PageHero from "@/src/components/PageHero"
 
 export default function TermsPage() {
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
 
-      <section className="pt-20 pb-12 sm:pt-28 sm:pb-16">
-        <div className="container mx-auto px-4 text-center max-w-2xl">
-          <h1 className="font-heading text-[40px] sm:text-[48px] font-bold text-foreground mb-4 leading-tight tracking-tight">
-            Terms of Service
-          </h1>
-          <p className="text-sm text-muted-foreground">
-            Last updated: February 2026
-          </p>
-        </div>
-      </section>
+      <PageHero
+        title="Terms of Service"
+        subtitle="Last updated: February 2026"
+        badge="Legal"
+      />
 
       <section className="pb-24">
         <div className="container mx-auto px-4 max-w-2xl">

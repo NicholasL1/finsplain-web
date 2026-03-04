@@ -1,10 +1,14 @@
+"use client";
+
 import {
   DollarSign,
   RefreshCw,
   TrendingUp,
   AlertTriangle,
   CheckCircle2,
-} from "lucide-react"
+} from "lucide-react";
+import { motion } from "motion/react";
+import AnimateOnScroll from "@/src/components/AnimateOnScroll";
 
 const features = [
   {
@@ -39,27 +43,33 @@ const features = [
     description:
       "Duplicate charges and unrecognized transactions are flagged before they turn into bigger problems.",
   },
-]
+];
 
 const stats = [
   { label: "Fees found", value: "$147.50", color: "#F59E0B" },
   { label: "Subscriptions", value: "6 active", color: "#6366F1" },
   { label: "Unusual activity", value: "2 flagged", color: "#EF4444" },
   { label: "Savings identified", value: "$89.99", color: "#10B981" },
-]
+];
 
 const insights = [
   { dot: "#F59E0B", text: "Monthly maintenance fee · $14.99" },
   { dot: "#6366F1", text: "Adobe Creative Cloud · $54.99/mo" },
   { dot: "#10B981", text: "Grocery spending below area average" },
   { dot: "#EF4444", text: "Duplicate charge from online retailer · $79.99" },
-]
+];
 
 export default function FeatureShowcase() {
   return (
-    <section className="py-20 sm:py-24 bg-muted">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
+    <section className="py-20 sm:py-24 bg-linear-to-b from-background via-muted to-background dark:via-muted/55 relative overflow-hidden">
+      {/* Radial glow overlay */}
+      <div
+        className="absolute inset-0 bg-radial from-emerald-500/4 via-transparent to-transparent pointer-events-none"
+        aria-hidden="true"
+      />
+
+      <div className="container mx-auto px-4 relative">
+        <AnimateOnScroll direction="up" className="text-center mb-16">
           <h2 className="font-heading text-3xl sm:text-4xl font-bold text-foreground mb-4">
             Financial clarity, visualized
           </h2>
@@ -67,13 +77,24 @@ export default function FeatureShowcase() {
             FinSplain turns pages of transactions into a clean summary you can
             actually act on — in under 30 seconds.
           </p>
-        </div>
+        </AnimateOnScroll>
 
         <div className="grid lg:grid-cols-2 gap-12 items-center max-w-5xl mx-auto">
-          {/* Feature list */}
+          {/* Feature list — slides in from left */}
           <div className="space-y-7">
-            {features.map((f) => (
-              <div key={f.title} className="flex gap-4">
+            {features.map((f, index) => (
+              <motion.div
+                key={f.title}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{
+                  duration: 0.4,
+                  delay: index * 0.1,
+                  ease: [0.25, 0.46, 0.45, 0.94],
+                }}
+                className="flex gap-4"
+              >
                 <div
                   className={`flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center ${f.iconBgClass}`}
                 >
@@ -87,12 +108,22 @@ export default function FeatureShowcase() {
                     {f.description}
                   </p>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
 
-          {/* Mock dashboard card */}
-          <div className="rounded-2xl border border-border bg-card shadow-sm overflow-hidden">
+          {/* Mock dashboard card — slides in from right */}
+          <motion.div
+            initial={{ opacity: 0, x: 32 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{
+              duration: 0.55,
+              delay: 0.2,
+              ease: [0.25, 0.46, 0.45, 0.94],
+            }}
+            className="rounded-2xl border border-border border-t-2 border-t-emerald-500/40 bg-card shadow-xl shadow-black/5 dark:shadow-black/20 overflow-hidden"
+          >
             {/* Card header */}
             <div className="px-5 py-4 border-b border-border">
               <div className="flex items-center justify-between">
@@ -141,9 +172,9 @@ export default function FeatureShowcase() {
                 </div>
               ))}
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
-  )
+  );
 }

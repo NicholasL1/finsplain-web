@@ -1,38 +1,35 @@
-import Link from "next/link";
-import Logo from "@/src/components/Logo";
+import Link from "next/link"
+import Logo from "@/src/components/Logo"
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
+  const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="border-t border-border bg-background">
+    <footer className="bg-background border-none">
       <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+        <div className="mb-12 grid grid-cols-2 gap-8 md:grid-cols-4">
           <div>
-            <Link
-              href="/"
-              className="flex items-center gap-2 mb-4"
-            >
+            <Link href="/" className="mb-4 flex items-center gap-2">
               <Logo size={22} />
-              <span className="text-lg font-heading font-bold text-foreground">
+              <span className="font-heading text-foreground text-lg font-bold">
                 Fin<span className="text-emerald-500">Splain</span>
               </span>
             </Link>
-            <p className="text-sm text-muted-foreground leading-relaxed">
+            <p className="text-muted-foreground text-sm leading-relaxed">
               Transform complex financial documents into clear, actionable
               insights.
             </p>
           </div>
 
           <div>
-            <h3 className="font-heading font-semibold text-foreground mb-4 text-sm">
+            <h3 className="font-heading text-foreground mb-4 text-sm font-semibold">
               Product
             </h3>
             <ul className="space-y-2.5">
               <li>
                 <Link
                   href="/how-it-works"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  className="text-muted-foreground hover:text-foreground text-sm transition-colors duration-150 hover:underline hover:underline-offset-2"
                 >
                   How It Works
                 </Link>
@@ -40,7 +37,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/sign-up"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  className="text-muted-foreground hover:text-foreground text-sm transition-colors duration-150 hover:underline hover:underline-offset-2"
                 >
                   Get Started
                 </Link>
@@ -49,14 +46,14 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="font-heading font-semibold text-foreground mb-4 text-sm">
+            <h3 className="font-heading text-foreground mb-4 text-sm font-semibold">
               Legal
             </h3>
             <ul className="space-y-2.5">
               <li>
                 <Link
                   href="/privacy"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  className="text-muted-foreground hover:text-foreground text-sm transition-colors duration-150 hover:underline hover:underline-offset-2"
                 >
                   Privacy Policy
                 </Link>
@@ -64,7 +61,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/terms"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  className="text-muted-foreground hover:text-foreground text-sm transition-colors duration-150 hover:underline hover:underline-offset-2"
                 >
                   Terms of Service
                 </Link>
@@ -72,7 +69,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="#"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  className="text-muted-foreground hover:text-foreground text-sm transition-colors duration-150 hover:underline hover:underline-offset-2"
                 >
                   Security
                 </Link>
@@ -81,14 +78,14 @@ export default function Footer() {
           </div>
 
           <div>
-            <h3 className="font-heading font-semibold text-foreground mb-4 text-sm">
+            <h3 className="font-heading text-foreground mb-4 text-sm font-semibold">
               Support
             </h3>
             <ul className="space-y-2.5">
               <li>
                 <Link
                   href="#"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  className="text-muted-foreground hover:text-foreground text-sm transition-colors duration-150 hover:underline hover:underline-offset-2"
                 >
                   Help Center
                 </Link>
@@ -96,7 +93,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/contact"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  className="text-muted-foreground hover:text-foreground text-sm transition-colors duration-150 hover:underline hover:underline-offset-2"
                 >
                   Contact Us
                 </Link>
@@ -104,7 +101,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="#"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  className="text-muted-foreground hover:text-foreground text-sm transition-colors duration-150 hover:underline hover:underline-offset-2"
                 >
                   Status
                 </Link>
@@ -113,12 +110,12 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-border">
-          <div className="text-sm text-muted-foreground">
+        <div className="border-border flex flex-col items-center justify-between border-t pt-8 md:flex-row">
+          <div className="text-muted-foreground text-sm">
             © {currentYear} FinSplain. All rights reserved.
           </div>
         </div>
       </div>
     </footer>
-  );
+  )
 }

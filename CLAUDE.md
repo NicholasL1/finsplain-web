@@ -18,6 +18,7 @@ npm run lint         # Run ESLint
 ### Routing & Pages
 
 File-based routing under `app/`. Current routes:
+
 - `/` — Home
 - `/how-it-works`, `/privacy` — Info pages
 - `/login`, `/signup` — Auth pages
@@ -43,3 +44,27 @@ Authentication is currently a placeholder (`isAuthenticated = false` hardcoded i
 ### Path Aliases
 
 `@/*` maps to the project root (configured in `tsconfig.json`).
+
+## Operating Rules
+
+- Always review this entire CLAUDE.md file before making changes.
+- Follow architectural patterns described here.
+- Do not introduce patterns that conflict with this document.
+- If a change conflicts with these rules, explain why before proceeding.
+
+## Mandatory After Every Change
+
+You must:
+
+1. Run all tests
+2. Ensure all existing tests pass
+3. Update tests to reflect intentional changes
+4. Run the linter
+5. Fix all linting issues
+6. Confirm no business use cases were broken
+
+## Additional Context Files
+
+Claude must also read:
+
+- docs/ARCHITECTURE.md
