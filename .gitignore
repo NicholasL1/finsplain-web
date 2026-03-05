@@ -45,3 +45,6 @@ next-env.d.ts
 .env.local
 /.vscode/*
 !/.vscode/settings.json
+
+# mcp folders
+.playwright-mcp/
