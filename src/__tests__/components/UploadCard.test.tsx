@@ -56,7 +56,7 @@ describe("UploadCard — idle state", () => {
     const fileInput = document.querySelector("input[type='file']") as HTMLInputElement;
     expect(fileInput).toHaveAttribute(
       "accept",
-      ".pdf,.csv,.xlsx,.xls,.png,.jpg,.jpeg"
+      ".pdf,.png,.jpg,.jpeg,.heic,.heif"
     );
   });
 });

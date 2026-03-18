@@ -80,12 +80,14 @@ describe("SignUpForm", () => {
     expect(screen.getByRole("button", { name: /sign up/i })).toBeDisabled();
   });
 
-  it("enables the submit button when all password requirements are met", async () => {
+  it("enables the submit button when all password requirements are met and terms are accepted", async () => {
     const user = userEvent.setup();
     render(<SignUpForm />);
     const passwordInput = document.querySelector("input[name='password']") as HTMLInputElement;
     // A password that meets all 5 requirements
     await user.type(passwordInput, "StrongPass1!");
+    // Also accept terms (required alongside password validity)
+    await user.click(screen.getByRole("checkbox"));
     expect(screen.getByRole("button", { name: /sign up/i })).not.toBeDisabled();
   });
 });
