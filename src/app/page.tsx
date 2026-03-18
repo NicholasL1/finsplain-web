@@ -4,7 +4,6 @@ import Navbar from "@/src/components/Navbar";
 import ProcessSteps from "@/src/components/ProcessSteps";
 import FeatureShowcase from "@/src/components/FeatureShowcase";
 import PrivacyPrinciples from "@/src/components/PrivacyPrinciples";
-import StatsSection from "@/src/components/StatsSection";
 import CTASection from "@/src/components/CTASection";
 import { createClient } from "@/supabase/server";
 
@@ -19,8 +18,6 @@ export default async function Home() {
     <div className="min-h-screen bg-background">
       <Navbar />
       <Hero firstName={firstName || undefined} />
-
-      <StatsSection />
 
       <ProcessSteps />
       <FeatureShowcase />
