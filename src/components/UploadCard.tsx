@@ -17,11 +17,10 @@ import { createClient } from "../../supabase/client"
 
 const ACCEPTED_TYPES = [
   "application/pdf",
-  "text/csv",
-  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-  "application/vnd.ms-excel",
   "image/png",
   "image/jpeg",
+  "image/heic",
+  "image/heif",
 ]
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024 // 10 MB
@@ -57,7 +56,7 @@ export default function UploadCard() {
 
   const validateFile = (file: File): string | null => {
     if (!ACCEPTED_TYPES.includes(file.type)) {
-      return "Unsupported file type. Please upload a PDF, CSV, Excel, PNG, or JPEG."
+      return "Unsupported file type. Please upload a PDF, PNG, JPEG, or HEIC image."
     }
     if (file.size > MAX_FILE_SIZE) {
       return "File is too large. Maximum size is 10 MB."
@@ -406,7 +405,7 @@ export default function UploadCard() {
         <input
           ref={fileInputRef}
           type="file"
-          accept=".pdf,.csv,.xlsx,.xls,.png,.jpg,.jpeg"
+          accept=".pdf,.png,.jpg,.jpeg,.heic,.heif"
           className="hidden"
           onChange={handleFileChange}
         />

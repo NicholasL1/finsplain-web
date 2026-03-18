@@ -32,9 +32,6 @@ export const signUpAction = async (formData: FormData) => {
     },
   });
 
-  console.log("After signUp", error);
-
-
   if (error) {
     console.error(error.code + " " + error.message);
     const message =
@@ -115,7 +112,7 @@ export const forgotPasswordAction = async (formData: FormData) => {
     return encodedRedirect("error", "/forgot-password", message);
   }
 
-  if (callbackUrl) {
+  if (callbackUrl && callbackUrl.startsWith("/") && !callbackUrl.startsWith("//")) {
     return redirect(callbackUrl);
   }
 
@@ -188,7 +185,7 @@ export const resetPasswordAction = async (formData: FormData) => {
   return redirect("/sign-in?toast=password-reset");
 };
 
-export type SignInState = { error: string; attempts: number }
+export type SignInState = { error: string; attempts: number; lastAttemptAt: number }
 
 export const signInActionWithState = async (
   prevState: SignInState | null,
@@ -198,6 +195,22 @@ export const signInActionWithState = async (
   const password = formData.get("password") as string;
   const supabase = await createClient();
   const prevAttempts = prevState?.attempts ?? 0;
+  const lastAttemptAt = prevState?.lastAttemptAt ?? 0;
+  const now = Date.now();
+
+  // Progressive backoff: 2s base, scales with failed attempts, capped at 30s.
+  const backoffMs = Math.min(
+    2000 * Math.pow(1.5, Math.min(prevAttempts, 8)),
+    30000
+  );
+  if (lastAttemptAt > 0 && now - lastAttemptAt < backoffMs) {
+    const waitSec = Math.ceil((backoffMs - (now - lastAttemptAt)) / 1000);
+    return {
+      error: `Please wait ${waitSec} second${waitSec > 1 ? "s" : ""} before trying again.`,
+      attempts: prevAttempts,
+      lastAttemptAt,
+    };
+  }
 
   const { error } = await supabase.auth.signInWithPassword({
     email,
@@ -214,7 +227,7 @@ export const signInActionWithState = async (
     } else if (error.message.toLowerCase().includes("email not confirmed")) {
       message = "Please verify your email address before signing in.";
     }
-    return { error: message, attempts: prevAttempts + 1 };
+    return { error: message, attempts: prevAttempts + 1, lastAttemptAt: now };
   }
 
   return redirect("/dashboard?toast=signed-in") as never;

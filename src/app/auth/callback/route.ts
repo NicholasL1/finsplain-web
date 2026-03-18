@@ -6,7 +6,13 @@ export async function GET(request: Request) {
   const code = requestUrl.searchParams.get("code");
   const redirect_to = requestUrl.searchParams.get("redirect_to");
 
-  const redirectTo = redirect_to || "/dashboard";
+  // Validate redirect target: must be a relative path starting with "/"
+  // and must not start with "//" (protocol-relative URL → open redirect).
+  const isSafeRedirect =
+    redirect_to &&
+    redirect_to.startsWith("/") &&
+    !redirect_to.startsWith("//");
+  const redirectTo = isSafeRedirect ? redirect_to : "/dashboard";
   const response = NextResponse.redirect(new URL(redirectTo, requestUrl.origin));
 
   if (code) {
