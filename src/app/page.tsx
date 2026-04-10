@@ -4,6 +4,7 @@ import Navbar from "@/src/components/Navbar";
 import ProcessSteps from "@/src/components/ProcessSteps";
 import FeatureShowcase from "@/src/components/FeatureShowcase";
 import PrivacyPrinciples from "@/src/components/PrivacyPrinciples";
+import PricingSection from "@/src/components/PricingSection";
 import CTASection from "@/src/components/CTASection";
 import { createClient } from "@/supabase/server";
 
@@ -22,6 +23,7 @@ export default async function Home() {
       <ProcessSteps />
       <FeatureShowcase />
       <PrivacyPrinciples />
+      <PricingSection />
 
       <CTASection
         heading="Ready to understand your finances?"

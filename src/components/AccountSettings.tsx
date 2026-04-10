@@ -10,10 +10,17 @@ import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import { updateThemeAction } from "@/src/app/actions";
 import { cn } from "@/src/lib/utils";
+import PlanSubscriptionCard from "@/src/components/PlanSubscriptionCard";
+import type { PlanId } from "@/src/lib/plans";
 
 interface AccountSettingsProps {
   userEmail: string;
   userFullName?: string;
+  currentPlan: PlanId;
+  creditsUsed: number;
+  creditsRemaining: number;
+  creditsResetAt: string;
+  hasStripeCustomer: boolean;
 }
 
 type ThemeOption = { value: string; label: string; icon: React.ElementType };
@@ -24,7 +31,15 @@ const THEME_OPTIONS: ThemeOption[] = [
   { value: "system", label: "System", icon: Monitor },
 ];
 
-export default function AccountSettings({ userEmail, userFullName }: AccountSettingsProps) {
+export default function AccountSettings({
+  userEmail,
+  userFullName,
+  currentPlan,
+  creditsUsed,
+  creditsRemaining,
+  creditsResetAt,
+  hasStripeCustomer,
+}: Readonly<AccountSettingsProps>) {
   const [fullName, setFullName] = useState(userFullName ?? "");
   const [isSaving, setIsSaving] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -147,6 +162,15 @@ export default function AccountSettings({ userEmail, userFullName }: AccountSett
           </div>
         </div>
       </div>
+
+      {/* Subscription Section */}
+      <PlanSubscriptionCard
+        currentPlan={currentPlan}
+        creditsUsed={creditsUsed}
+        creditsRemaining={creditsRemaining}
+        creditsResetAt={creditsResetAt}
+        hasStripeCustomer={hasStripeCustomer}
+      />
 
       {/* Appearance Section */}
       <div className="rounded-2xl border border-border border-t-2 border-t-indigo-500/30 p-6 mb-6">

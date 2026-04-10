@@ -36,6 +36,14 @@ export default function Footer() {
               </li>
               <li>
                 <Link
+                  href="/pricing"
+                  className="text-muted-foreground hover:text-foreground text-sm transition-colors duration-150 hover:underline hover:underline-offset-2"
+                >
+                  Pricing
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/sign-up"
                   className="text-muted-foreground hover:text-foreground text-sm transition-colors duration-150 hover:underline hover:underline-offset-2"
                 >

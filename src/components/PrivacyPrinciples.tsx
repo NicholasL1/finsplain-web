@@ -31,9 +31,9 @@ const principles = [
   },
   {
     icon: Server,
-    title: "SOC 2 Compliant",
+    title: "Secure Infrastructure",
     description:
-      "Our infrastructure meets SOC 2 Type II standards with regular third-party audits and penetration testing.",
+      "We run on hardened cloud infrastructure with access logging, intrusion detection, and regular security reviews.",
     iconBg: "bg-indigo-500/10",
     iconColor: "text-indigo-500",
   },

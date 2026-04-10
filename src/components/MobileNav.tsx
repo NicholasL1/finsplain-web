@@ -64,6 +64,13 @@ export default function MobileNav({ isAuthenticated }: Readonly<MobileNavProps>)
                   How It Works
                 </Link>
                 <Link
+                  href="/pricing"
+                  onClick={() => setIsOpen(false)}
+                  className="px-4 py-3 text-sm font-medium text-foreground hover:bg-accent rounded-xl transition-colors"
+                >
+                  Pricing
+                </Link>
+                <Link
                   href="/privacy"
                   onClick={() => setIsOpen(false)}
                   className="px-4 py-3 text-sm font-medium text-foreground hover:bg-accent rounded-xl transition-colors"

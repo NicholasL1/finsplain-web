@@ -89,6 +89,8 @@ const SPENDING_CHART_DATA = [
 interface HowItWorksDemoProps {
   /** Compact mode: shows chart + summary grid only in results (no detail lists). Use inside Hero. */
   compact?: boolean
+  /** When true, the container starts at the expanded height so it never grows. */
+  fixedHeight?: boolean
   /** Called when the browser window starts expanding (results incoming). Use to reveal sibling content. */
   onExpanded?: () => void
   /** Called when the demo resets (e.g. scrolled out of view). Use to hide sibling content again. */
@@ -97,6 +99,7 @@ interface HowItWorksDemoProps {
 
 export default function HowItWorksDemo({
   compact = false,
+  fixedHeight = false,
   onExpanded,
   onReset,
 }: HowItWorksDemoProps) {
@@ -204,8 +207,8 @@ export default function HowItWorksDemo({
     <div
       ref={containerRef}
       style={{
-        minHeight: isExpanded ? "700px" : "420px",
-        transition: "min-height 0.9s cubic-bezier(0.4, 0, 0.2, 1)",
+        minHeight: fixedHeight ? "700px" : isExpanded ? "700px" : "420px",
+        transition: fixedHeight ? "none" : "min-height 0.9s cubic-bezier(0.4, 0, 0.2, 1)",
       }}
       className="border-border bg-background overflow-hidden rounded-2xl border shadow-[0_1px_3px_rgba(0,0,0,0.07)]"
     >

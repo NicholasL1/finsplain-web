@@ -26,7 +26,7 @@ const commitments = [
   {
     title: "Infrastructure Security",
     content:
-      "Our infrastructure runs on SOC 2 compliant cloud providers with regular security audits. All data is encrypted at rest (AES-256) and in transit (TLS 1.3). We maintain comprehensive access logs and intrusion detection.",
+      "Our infrastructure runs on hardened cloud providers with regular internal security reviews. All data is encrypted at rest (AES-256) and in transit (TLS 1.3). We maintain comprehensive access logs and intrusion detection.",
   },
 ];
 

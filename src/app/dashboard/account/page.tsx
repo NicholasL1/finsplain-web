@@ -2,6 +2,8 @@ import Navbar from "@/src/components/Navbar";
 import { redirect } from "next/navigation";
 import { createClient } from "../../../../supabase/server";
 import AccountSettings from "@/src/components/AccountSettings";
+import type { PlanId } from "@/src/lib/plans";
+
 
 export default async function AccountPage() {
   const supabase = await createClient();
@@ -14,6 +16,12 @@ export default async function AccountPage() {
     return redirect("/sign-in");
   }
 
+  const { data: profile } = await supabase
+    .from("users")
+    .select("plan, credits_remaining, credits_used, credits_reset_at, stripe_customer_id")
+    .eq("id", user.id)
+    .single();
+
   return (
     <div className="relative min-h-screen bg-background overflow-hidden">
       {/* Ambient background */}
@@ -23,6 +31,11 @@ export default async function AccountPage() {
       <AccountSettings
         userEmail={user.email || ""}
         userFullName={user.user_metadata?.full_name ?? user.user_metadata?.name ?? ""}
+        currentPlan={(profile?.plan as PlanId) ?? "starter"}
+        creditsUsed={profile?.credits_used ?? 0}
+        creditsRemaining={profile?.credits_remaining ?? 5}
+        creditsResetAt={profile?.credits_reset_at ?? new Date(new Date().getFullYear(), new Date().getMonth() + 1, 1).toISOString()}
+        hasStripeCustomer={!!profile?.stripe_customer_id}
       />
     </div>
   );

@@ -59,6 +59,12 @@ export default async function Navbar() {
                 How It Works
               </Link>
               <Link
+                href="/pricing"
+                className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Pricing
+              </Link>
+              <Link
                 href="/privacy"
                 className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
               >
