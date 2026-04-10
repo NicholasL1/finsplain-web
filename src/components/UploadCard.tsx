@@ -125,6 +125,15 @@ export default function UploadCard() {
     return null
   }
 
+  const handleTrySample = useCallback(async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+    if (!user) {
+      router.push("/sign-in")
+    }
+  }, [supabase, router])
+
   const processFile = useCallback(
     async (file: File) => {
       setError(null)
@@ -430,6 +439,12 @@ export default function UploadCard() {
             className="px-7 py-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full text-sm font-medium transition-colors duration-150 active:scale-[0.98]"
           >
             Select a file
+          </button>
+          <button
+            onClick={() => void handleTrySample()}
+            className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Try a sample document
           </button>
         </div>
       </div>

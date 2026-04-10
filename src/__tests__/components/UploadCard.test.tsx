@@ -10,6 +10,12 @@ jest.mock("@/supabase/client", () => ({
   createClient: jest.fn(),
 }));
 
+jest.mock("@/src/lib/api", () => ({
+  // eslint-disable-next-line @typescript-eslint/no-extraneous-class
+  AnalyzeError: class AnalyzeError extends Error {},
+  analyzeDocument: jest.fn(() => new Promise(() => { /* never resolves — keeps component in processing phase */ })),
+}));
+
 import { createClient } from "@/supabase/client";
 
 const mockUseRouter = useRouter as jest.Mock;

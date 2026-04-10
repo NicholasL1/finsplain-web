@@ -39,7 +39,7 @@ export function createMockDocument(
     total_fees: 45.5,
     subscriptions_found: 3,
     unusual_activities: 1,
-    savings_identified: 120.0,
+    savings_identified: 120,
     created_at: "2024-03-15T10:00:00Z",
     ...overrides,
   };
@@ -85,7 +85,10 @@ export function createMockSupabaseClient(
   const selectMock = jest.fn().mockReturnValue({ eq: eqMock });
   const updateEqMock = jest.fn().mockResolvedValue(resolved);
   const updateMock = jest.fn().mockReturnValue({ eq: updateEqMock });
-  const insertMock = jest.fn().mockResolvedValue(resolved);
+  // insert returns a builder that supports .select("id").single() chaining
+  const insertSingleMock = jest.fn().mockResolvedValue({ data: { id: "doc-1" }, error: null });
+  const insertSelectMock = jest.fn().mockReturnValue({ single: insertSingleMock });
+  const insertMock = jest.fn().mockReturnValue({ select: insertSelectMock });
 
   const fromMock = jest.fn().mockReturnValue({
     insert: insertMock,
@@ -101,6 +104,10 @@ export function createMockSupabaseClient(
       }),
       signOut: jest.fn().mockResolvedValue({ error: null }),
       updateUser: jest.fn().mockResolvedValue({ data: {}, error: null }),
+      refreshSession: jest.fn().mockResolvedValue({
+        data: { session: { access_token: "mock-token" } },
+        error: null,
+      }),
     },
     from: fromMock,
     // Expose individual mocks for assertions in tests

@@ -32,32 +32,41 @@ beforeEach(() => {
   mockUseRouter.mockReturnValue({ push: jest.fn(), refresh: jest.fn() });
 });
 
+const defaultProps = {
+  userEmail: "jane@example.com",
+  currentPlan: "starter" as const,
+  creditsUsed: 0,
+  creditsRemaining: 5,
+  creditsResetAt: "2026-05-01T00:00:00Z",
+  hasStripeCustomer: false,
+};
+
 describe("AccountSettings", () => {
   it("renders the user email in the Profile section", () => {
-    render(<AccountSettings userEmail="jane@example.com" />);
+    render(<AccountSettings {...defaultProps} />);
     expect(screen.getByText("jane@example.com")).toBeInTheDocument();
   });
 
   it("renders the Full Name input field", () => {
-    render(<AccountSettings userEmail="jane@example.com" />);
+    render(<AccountSettings {...defaultProps} />);
     expect(screen.getByLabelText(/full name/i)).toBeInTheDocument();
   });
 
   it("disables the Save Changes button when the name input is empty", () => {
-    render(<AccountSettings userEmail="jane@example.com" />);
+    render(<AccountSettings {...defaultProps} />);
     expect(screen.getByRole("button", { name: /save changes/i })).toBeDisabled();
   });
 
   it("enables the Save Changes button when a name is typed", async () => {
     const user = userEvent.setup();
-    render(<AccountSettings userEmail="jane@example.com" />);
+    render(<AccountSettings {...defaultProps} />);
     await user.type(screen.getByLabelText(/full name/i), "Jane Doe");
     expect(screen.getByRole("button", { name: /save changes/i })).not.toBeDisabled();
   });
 
   it("calls supabase.auth.updateUser when Save Changes is clicked", async () => {
     const user = userEvent.setup();
-    render(<AccountSettings userEmail="jane@example.com" />);
+    render(<AccountSettings {...defaultProps} />);
     await user.type(screen.getByLabelText(/full name/i), "Jane Doe");
     await user.click(screen.getByRole("button", { name: /save changes/i }));
     await waitFor(() => {
@@ -69,7 +78,7 @@ describe("AccountSettings", () => {
 
   it('shows "✓ Saved" feedback after a successful profile save', async () => {
     const user = userEvent.setup();
-    render(<AccountSettings userEmail="jane@example.com" />);
+    render(<AccountSettings {...defaultProps} />);
     await user.type(screen.getByLabelText(/full name/i), "Jane Doe");
     await user.click(screen.getByRole("button", { name: /save changes/i }));
     await waitFor(() => {
@@ -78,7 +87,7 @@ describe("AccountSettings", () => {
   });
 
   it("renders Light, Dark, and System theme buttons in the Appearance section", () => {
-    render(<AccountSettings userEmail="jane@example.com" />);
+    render(<AccountSettings {...defaultProps} />);
     expect(screen.getByRole("button", { name: /^light$/i })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /^dark$/i })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /^system$/i })).toBeInTheDocument();
@@ -88,7 +97,7 @@ describe("AccountSettings", () => {
     const setTheme = jest.fn();
     mockUseTheme.mockReturnValue({ theme: "light", setTheme });
     const user = userEvent.setup();
-    render(<AccountSettings userEmail="jane@example.com" />);
+    render(<AccountSettings {...defaultProps} />);
     await user.click(screen.getByRole("button", { name: /^dark$/i }));
     expect(setTheme).toHaveBeenCalledWith("dark");
     await waitFor(() => {
@@ -100,7 +109,7 @@ describe("AccountSettings", () => {
     const mockPush = jest.fn();
     mockUseRouter.mockReturnValue({ push: mockPush, refresh: jest.fn() });
     const user = userEvent.setup();
-    render(<AccountSettings userEmail="jane@example.com" />);
+    render(<AccountSettings {...defaultProps} />);
     await user.click(screen.getByRole("button", { name: /sign out/i }));
     await waitFor(() => {
       expect(mockSupabase.auth.signOut).toHaveBeenCalled();
