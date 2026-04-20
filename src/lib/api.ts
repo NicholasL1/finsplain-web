@@ -63,5 +63,15 @@ export async function analyzeDocument(
     )
   }
 
-  return (await res.json()) as AnalyzeResponse
+  const rawText = await res.text()
+  try {
+    return JSON.parse(rawText) as AnalyzeResponse
+  } catch {
+    console.error("[analyzeDocument] Failed to parse backend response body:", rawText.slice(0, 500))
+    throw new AnalyzeError(
+      "Something went wrong on our end. Please try again.",
+      "INTERNAL_ERROR",
+      false
+    )
+  }
 }

@@ -212,6 +212,7 @@ export default function UploadCard() {
         // Handle the three response statuses
         if (response.status === "error") {
           // All documents failed
+          console.error("[UploadCard] Backend returned error status:", response)
           const errorMsg =
             response.errors[0]?.message ||
             "Something went wrong on our end. Please try again."
