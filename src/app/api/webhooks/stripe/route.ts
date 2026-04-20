@@ -3,8 +3,6 @@ import Stripe from "stripe";
 import { stripe, planFromPriceId, PLAN_CREDITS } from "@/src/lib/stripe";
 import { createClient } from "@/supabase/server";
 
-// Next.js App Router: disable body parsing so we can verify the raw signature
-export const config = { api: { bodyParser: false } };
 
 async function getUserIdFromCustomer(
   supabase: Awaited<ReturnType<typeof createClient>>,
