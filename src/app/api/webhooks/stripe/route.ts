@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
           credits_remaining: credits,
           credits_used: 0,
           credits_reset_at: new Date(
-            subscription.current_period_end * 1000
+            (subscription.items.data[0]?.current_period_end ?? 0) * 1000
           ).toISOString(),
           updated_at: new Date().toISOString(),
         })
@@ -92,7 +92,7 @@ export async function POST(req: NextRequest) {
           subscription_status: status,
           credits_remaining: credits,
           credits_reset_at: new Date(
-            subscription.current_period_end * 1000
+            (subscription.items.data[0]?.current_period_end ?? 0) * 1000
           ).toISOString(),
           updated_at: new Date().toISOString(),
         })
