@@ -409,7 +409,7 @@ export default function SampleDocumentModal() {
                         fontSize: "12px",
                         boxShadow: "0 1px 3px rgba(0,0,0,0.1)",
                       }}
-                      formatter={(value: number) => [`$${value}`, undefined]}
+                      formatter={(value: number | undefined) => [`$${value ?? 0}`, undefined]}
                     />
                     <Legend
                       wrapperStyle={{ fontSize: "11px", paddingTop: "8px" }}
